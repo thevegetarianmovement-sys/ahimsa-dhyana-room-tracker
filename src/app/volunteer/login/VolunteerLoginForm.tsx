@@ -21,7 +21,7 @@ export default function VolunteerLoginForm({
     try {
       const formData = new FormData(e.currentTarget)
       
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:4000'}/api/auth/volunteer-login`, {
+      const res = await fetch('/api/auth/volunteer-login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include',
