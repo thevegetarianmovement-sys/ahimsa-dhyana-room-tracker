@@ -4,18 +4,7 @@ import bcrypt from 'bcryptjs'
 const prisma = new PrismaClient()
 
 async function main() {
-  // Clear existing data (optional, but good for idempotent seeds in dev)
-  await prisma.user.deleteMany()
-  await prisma.accommodationAllocation.deleteMany()
-  await prisma.volunteerShift.deleteMany()
-  await prisma.volunteer.deleteMany()
-  await prisma.participant.deleteMany()
-  await prisma.participantCategory.deleteMany()
-  await prisma.bed.deleteMany()
-  await prisma.room.deleteMany()
-  await prisma.hotel.deleteMany()
-  await prisma.shadBed.deleteMany()
-  await prisma.shad.deleteMany()
+  // Removed destructive deleteMany calls for production safety
 
   const adminPasswordRaw = process.env.ADMIN_INITIAL_PASSWORD
   const volunteerPasswordRaw = process.env.VOLUNTEER_INITIAL_PASSWORD
@@ -43,6 +32,13 @@ async function main() {
   // In production, we ONLY seed users, categories, and skip demo data.
   if (process.env.NODE_ENV === 'production') {
     console.log('Production mode detected. Seeding only base config (users/categories).')
+    return
+  }
+
+  
+  const existingHotel = await prisma.hotel.findFirst()
+  if (existingHotel) {
+    console.log('Seed: Baseline data already exists. Skipping hotel/shad generation.')
     return
   }
 
