@@ -1,0 +1,148 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Hotel {
+  id          String   @id @default(cuid())
+  name        String
+  code        String   @unique
+  location    String?
+  rooms           Room[]
+  volunteerShifts VolunteerShift[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Room {
+  id          String   @id @default(cuid())
+  hotelId     String
+  hotel       Hotel    @relation(fields: [hotelId], references: [id], onDelete: Cascade)
+  number      String
+  capacity    Int
+  gender      String?  // 'MALE', 'FEMALE', 'ANY'
+  beds        Bed[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@unique([hotelId, number])
+}
+
+model Bed {
+  id          String   @id @default(cuid())
+  roomId      String
+  room        Room     @relation(fields: [roomId], references: [id], onDelete: Cascade)
+  number      String
+  allocations AccommodationAllocation[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@unique([roomId, number])
+}
+
+model Shad {
+  id          String   @id @default(cuid())
+  name        String
+  code        String   @unique
+  capacity    Int
+  beds            ShadBed[]
+  volunteerShifts VolunteerShift[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model ShadBed {
+  id          String   @id @default(cuid())
+  shadId      String
+  shad        Shad     @relation(fields: [shadId], references: [id], onDelete: Cascade)
+  number      String
+  allocations AccommodationAllocation[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@unique([shadId, number])
+}
+
+model ParticipantCategory {
+  id          String   @id @default(cuid())
+  name        String   @unique
+  participants Participant[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Participant {
+  id               String   @id @default(cuid())
+  registrationNumber String? @unique
+  name             String
+  phone            String?
+  gender           String?  // 'MALE', 'FEMALE', 'OTHER'
+  categoryId       String?
+  category         ParticipantCategory? @relation(fields: [categoryId], references: [id])
+  allocations      AccommodationAllocation[]
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+}
+
+model AccommodationAllocation {
+  id               String   @id @default(cuid())
+  accommodationId  String   @unique // JADMS... unique identifier
+  participantId    String
+  participant      Participant @relation(fields: [participantId], references: [id])
+  
+  // An allocation belongs to EITHER a Hotel Bed OR a Shad Bed
+  bedId            String?
+  bed              Bed?        @relation(fields: [bedId], references: [id])
+  
+  shadBedId        String?
+  shadBed          ShadBed?    @relation(fields: [shadBedId], references: [id])
+
+  checkInDate      DateTime
+  checkOutDate     DateTime
+  status           String   @default("ACTIVE") // 'ACTIVE', 'CHECKED_OUT', 'CANCELLED'
+
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+}
+
+model Volunteer {
+  id          String   @id @default(cuid())
+  name        String
+  phone       String?
+  isActive    Boolean  @default(true)
+  shifts      VolunteerShift[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model VolunteerShift {
+  id          String   @id @default(cuid())
+  volunteerId String
+  volunteer   Volunteer @relation(fields: [volunteerId], references: [id], onDelete: Cascade)
+  
+  hotelId     String?
+  hotel       Hotel?   @relation(fields: [hotelId], references: [id])
+  shadId      String?
+  shad        Shad?    @relation(fields: [shadId], references: [id])
+
+  date        DateTime // Date of the shift
+  shiftName   String   // 'Shift 1', 'Shift 2', etc.
+  startTime   String   // e.g., '07:00'
+  endTime     String   // e.g., '13:00'
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model User {
+  id           String   @id @default(cuid())
+  username     String   @unique
+  passwordHash String
+  role         String   @default("VOLUNTEER") // 'ADMIN', 'VOLUNTEER'
+  isActive     Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
