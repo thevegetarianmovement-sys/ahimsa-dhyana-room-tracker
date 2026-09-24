@@ -46,6 +46,14 @@ export default function ShadForm() {
         <label className="block text-sm font-medium text-slate-700 mb-1">Total Capacity (Beds)</label>
         <input type="number" name="capacity" defaultValue={300} min={1} required className="w-full border px-4 py-2 rounded focus:ring-2 focus:ring-blue-500 focus:outline-none" />
       </div>
+      <div>
+        <label className="block text-sm font-medium text-slate-700 mb-1">Full Address (Optional)</label>
+        <textarea name="address" className="w-full border px-4 py-2 rounded focus:ring-2 focus:ring-blue-500 focus:outline-none" rows={3}></textarea>
+      </div>
+      <div>
+        <label className="block text-sm font-medium text-slate-700 mb-1">Google Maps Link (Optional)</label>
+        <input name="googleMapsLink" className="w-full border px-4 py-2 rounded focus:ring-2 focus:ring-blue-500 focus:outline-none" placeholder="https://goo.gl/maps/..." />
+      </div>
       <button type="submit" disabled={loading} className="w-full bg-blue-600 text-white font-bold py-2 rounded shadow hover:bg-blue-700 transition-colors disabled:opacity-50">
         {loading ? 'Creating...' : 'Create Shad'}
       </button>

@@ -44,7 +44,7 @@ export default async function VolunteerDashboard() {
     })
 
     locationName = hotel.name
-    content = <RoomList rooms={hotel.rooms} hotelId={hotel.id} />
+    content = <RoomList rooms={hotel.rooms} hotelId={hotel.id} hotel={hotel} />
 
   } else if (session.locationType === 'SHAD') {
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:4000'}/api/shads/${session.locationId}`, {
@@ -58,7 +58,7 @@ export default async function VolunteerDashboard() {
     shad.beds.sort((a: any, b: any) => a.number.localeCompare(b.number, undefined, { numeric: true, sensitivity: 'base' }))
     
     locationName = shad.name
-    content = <ShadBedList beds={shad.beds} shadId={shad.id} />
+    content = <ShadBedList beds={shad.beds} shadId={shad.id} shad={shad} />
   }
 
   return (

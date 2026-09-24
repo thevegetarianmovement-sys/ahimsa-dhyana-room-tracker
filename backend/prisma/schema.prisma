@@ -12,6 +12,8 @@ model Hotel {
   name        String
   code        String   @unique
   location    String?
+  address     String?
+  googleMapsLink String?
   rooms           Room[]
   volunteerShifts VolunteerShift[]
   createdAt   DateTime @default(now())
@@ -49,6 +51,8 @@ model Shad {
   name        String
   code        String   @unique
   capacity    Int
+  address     String?
+  googleMapsLink String?
   beds            ShadBed[]
   volunteerShifts VolunteerShift[]
   createdAt   DateTime @default(now())

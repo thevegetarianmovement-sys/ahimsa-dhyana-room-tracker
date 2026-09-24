@@ -20,7 +20,9 @@ export default function HotelForm() {
         body: JSON.stringify({
           name: formData.get('name') as string,
           code: formData.get('code') as string,
-          location: formData.get('location') as string
+          location: formData.get('location') as string,
+          address: formData.get('address') as string,
+          googleMapsLink: formData.get('googleMapsLink') as string
         })
       })
       if (!res.ok) throw new Error('Error creating hotel')
@@ -47,6 +49,14 @@ export default function HotelForm() {
         <input required name="location" className="mt-1 block w-full border px-3 py-2 rounded" />
       </div>
       
+      <div>
+        <label className="block text-sm font-medium text-slate-700">Full Address (Optional)</label>
+        <textarea name="address" className="mt-1 block w-full border px-3 py-2 rounded" rows={3}></textarea>
+      </div>
+      <div>
+        <label className="block text-sm font-medium text-slate-700">Google Maps Link (Optional)</label>
+        <input name="googleMapsLink" className="mt-1 block w-full border px-3 py-2 rounded" placeholder="https://goo.gl/maps/..." />
+      </div>
       <button type="submit" disabled={loading} className="w-full bg-blue-600 text-white px-4 py-2 rounded shadow hover:bg-blue-700 disabled:opacity-50">
         {loading ? 'Creating...' : 'Create Hotel'}
       </button>

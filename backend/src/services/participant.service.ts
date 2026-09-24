@@ -99,7 +99,7 @@ export const updateParticipant = async (id: string, data: ParticipantData) => {
   })
 }
 
-export const bulkCreateParticipants = async (participants: { name: string, phone?: string, registrationNumber?: string }[]) => {
+export const bulkCreateParticipants = async (participants: { name: string, phone?: string, registrationNumber?: string, gender?: string }[]) => {
   let successCount = 0
   let skipCount = 0
 
@@ -125,6 +125,7 @@ export const bulkCreateParticipants = async (participants: { name: string, phone
       data: {
         name: p.name,
         phone: p.phone || null,
+        gender: p.gender || null,
         registrationNumber: regNum
       }
     })

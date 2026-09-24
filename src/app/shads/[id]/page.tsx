@@ -63,7 +63,7 @@ export default async function ShadDetailsPage({ params }: { params: { id: string
         </div>
       </div>
 
-      <ShadBedList beds={shad.beds} shadId={shad.id} />
+      <ShadBedList beds={shad.beds} shadId={shad.id} shad={shad} />
     </div>
   )
 }

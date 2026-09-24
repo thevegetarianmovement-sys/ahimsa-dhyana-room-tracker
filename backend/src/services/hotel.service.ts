@@ -42,24 +42,28 @@ export const getHotelById = async (id: string) => {
   })
 }
 
-export const createHotel = async (data: { name: string, code: string, location: string }) => {
+export const createHotel = async (data: { name: string, code: string, location: string, address?: string, googleMapsLink?: string }) => {
   const hotel = await prisma.hotel.create({
     data: {
       name: data.name,
       code: data.code,
       location: data.location,
+      address: data.address,
+      googleMapsLink: data.googleMapsLink
     }
   })
   return hotel
 }
 
-export const updateHotel = async (id: string, data: { name: string, code: string, location: string }) => {
+export const updateHotel = async (id: string, data: { name: string, code: string, location: string, address?: string, googleMapsLink?: string }) => {
   return await prisma.hotel.update({
     where: { id },
     data: {
       name: data.name,
       code: data.code,
-      location: data.location
+      location: data.location,
+      address: data.address,
+      googleMapsLink: data.googleMapsLink
     }
   })
 }

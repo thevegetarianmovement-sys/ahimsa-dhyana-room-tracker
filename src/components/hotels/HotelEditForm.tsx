@@ -21,6 +21,8 @@ export default function HotelEditForm({ hotel }: { hotel: { id: string, name: st
           name: formData.get('name') as string,
           code: formData.get('code') as string,
           location: formData.get('location') as string,
+          address: formData.get('address') as string,
+          googleMapsLink: formData.get('googleMapsLink') as string,
         })
       })
       if (!res.ok) throw new Error('Error updating hotel')

@@ -6,6 +6,7 @@ import RoomForm from '@/components/hotels/RoomForm'
 import HotelEditForm from '@/components/hotels/HotelEditForm'
 import RoomList from '@/components/hotels/RoomList'
 import PrintButton from '@/components/PrintButton'
+import ShareHotelButton from '@/components/ShareHotelButton'
 
 export default async function HotelDetailsPage({ params }: { params: { id: string } }) {
   const sessionCookie = require('next/headers').cookies().get('session')?.value || ''
@@ -56,7 +57,8 @@ export default async function HotelDetailsPage({ params }: { params: { id: strin
           <a href={`/api/export/hotel/${hotel.id}`} className="bg-emerald-600 text-white px-4 py-2 rounded-lg shadow-sm hover:bg-emerald-700 font-medium text-sm transition-colors">
             ↓ Export CSV
           </a>
-          <PrintButton />
+          <ShareHotelButton name={hotel.name} address={hotel.address} googleMapsLink={hotel.googleMapsLink} />
+            <PrintButton />
         </div>
       </div>
 
@@ -93,7 +95,7 @@ export default async function HotelDetailsPage({ params }: { params: { id: strin
         <RoomForm hotelId={hotel.id} />
       </div>
 
-      <RoomList rooms={hotel.rooms} hotelId={hotel.id} />
+      <RoomList rooms={hotel.rooms} hotelId={hotel.id} hotel={hotel} />
     </div>
   )
 }

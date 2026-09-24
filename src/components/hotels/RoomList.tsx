@@ -2,10 +2,11 @@
 'use client'
 
 import { useState } from 'react'
+import ShareAllocationButton from '../ShareAllocationButton'
 import DeleteRoomButton from './DeleteRoomButton'
 import { useRouter } from 'next/navigation'
 
-export default function RoomList({ rooms, hotelId }: { rooms: any[], hotelId: string }) {
+export default function RoomList({ rooms, hotelId, hotel }: { rooms: any[], hotelId: string, hotel: any }) {
   const router = useRouter();
   const [filter, setFilter] = useState('ALL') // ALL, EMPTY, PARTIAL, FULL
   const [selectedBed, setSelectedBed] = useState<any>(null)
@@ -172,9 +173,12 @@ export default function RoomList({ rooms, hotelId }: { rooms: any[], hotelId: st
                   let statusLabel = 'Available'
                   let occupantName = ''
                   
+                  let occupantGender = ''
+                  
                   if (bed.allocations.length > 0) {
                     const alloc = bed.allocations[0]
                     occupantName = alloc.participant?.name || 'Occupied'
+                    occupantGender = alloc.participant?.gender === 'MALE' ? ' [M]' : alloc.participant?.gender === 'FEMALE' ? ' [F]' : ''
                     const today = new Date().toISOString().split('T')[0]
                     // We parse manually just in case checkOutDate is string from API
                     const checkOutDateStr = typeof alloc.checkOutDate === 'string' ? alloc.checkOutDate : new Date(alloc.checkOutDate).toISOString()
@@ -201,8 +205,8 @@ export default function RoomList({ rooms, hotelId }: { rooms: any[], hotelId: st
                       >
                         {bed.number}
                       </div>
-                      <span className="text-xs text-slate-500 mt-1 truncate w-16 text-center" title={occupantName || statusLabel}>
-                        {occupantName || statusLabel}
+                      <span className="text-xs text-slate-500 mt-1 truncate w-16 text-center" title={occupantName ? occupantName + occupantGender : statusLabel}>
+                        {occupantName ? occupantName + occupantGender : statusLabel}
                       </span>
                     </div>
                   )
@@ -229,7 +233,11 @@ export default function RoomList({ rooms, hotelId }: { rooms: any[], hotelId: st
               <div className="mt-6 space-y-4">
                 <div className="bg-slate-50 p-4 rounded border">
                   <p className="text-sm text-slate-500 font-medium mb-1">Occupant</p>
-                  <p className="text-lg font-bold text-slate-800">{selectedBed.allocations[0].participant?.name}</p>
+                  <p className="text-lg font-bold text-slate-800">
+                      {selectedBed.allocations[0].participant?.name} 
+                      {selectedBed.allocations[0].participant?.gender === 'MALE' && <span className="ml-2 text-sm bg-blue-100 text-blue-800 px-2 py-0.5 rounded-full">Male</span>}
+                      {selectedBed.allocations[0].participant?.gender === 'FEMALE' && <span className="ml-2 text-sm bg-pink-100 text-pink-800 px-2 py-0.5 rounded-full">Female</span>}
+                    </p>
                   <p className="text-sm text-slate-600">{selectedBed.allocations[0].participant?.registrationNumber}</p>
                 </div>
                 
@@ -244,7 +252,18 @@ export default function RoomList({ rooms, hotelId }: { rooms: any[], hotelId: st
                   </div>
                 </div>
 
-                <div className="pt-4 border-t mt-4 flex gap-3">
+                
+                  <div className="pt-4 border-t mt-4">
+                    <ShareAllocationButton 
+                      participantName={selectedBed.allocations[0].participant?.name || ''}
+                      hotelName={hotel.name}
+                      address={hotel.address}
+                      googleMapsLink={hotel.googleMapsLink}
+                      roomNo={selectedBed.roomNumber}
+                      bedNo={selectedBed.number}
+                    />
+                  </div>
+                  <div className="pt-4 mt-2 flex gap-3">
                   <button 
                     onClick={() => handleCheckOut(selectedBed.allocations[0].id)}
                     disabled={checkingOut}

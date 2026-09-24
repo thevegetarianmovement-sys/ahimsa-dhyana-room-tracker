@@ -1,6 +1,7 @@
 /* eslint-disable */
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
+import ShareHotelButton from '@/components/ShareHotelButton'
 
 export default async function VolunteerHotelDetails({ params }: { params: { id: string } }) {
   const { cookies } = await import('next/headers');
@@ -46,7 +47,10 @@ export default async function VolunteerHotelDetails({ params }: { params: { id: 
         <Link href="/volunteer/hotels" className="text-blue-600 font-medium inline-block mb-2">&larr; Back to Hotels</Link>
         
         <div className="bg-white p-6 rounded-2xl shadow-sm border">
+          <div className="flex justify-between items-center mb-4">
           <h1 className="text-3xl font-bold text-slate-800">{hotel.name}</h1>
+          <ShareHotelButton name={hotel.name} address={hotel.address} googleMapsLink={hotel.googleMapsLink} />
+        </div>
           <p className="text-slate-500 mb-4">{hotel.location}</p>
           
           <div className="grid grid-cols-2 gap-2 text-center">

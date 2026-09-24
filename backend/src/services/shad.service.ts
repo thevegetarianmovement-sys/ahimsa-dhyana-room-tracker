@@ -32,12 +32,14 @@ export const getShadById = async (id: string) => {
   })
 }
 
-export const createShad = async (data: { name: string, code: string, capacity: number }) => {
+export const createShad = async (data: { name: string, code: string, capacity: number, address?: string, googleMapsLink?: string }) => {
   const shad = await prisma.shad.create({
     data: {
       name: data.name,
       code: data.code,
-      capacity: data.capacity
+      capacity: data.capacity,
+      address: data.address,
+      googleMapsLink: data.googleMapsLink
     }
   })
 
@@ -50,13 +52,15 @@ export const createShad = async (data: { name: string, code: string, capacity: n
   return shad
 }
 
-export const updateShad = async (id: string, data: { name: string, code: string, capacity: number }) => {
+export const updateShad = async (id: string, data: { name: string, code: string, capacity: number, address?: string, googleMapsLink?: string }) => {
   const shad = await prisma.shad.update({
     where: { id },
     data: {
       name: data.name,
       code: data.code,
-      capacity: data.capacity
+      capacity: data.capacity,
+      address: data.address,
+      googleMapsLink: data.googleMapsLink
     },
     include: {
       beds: true
