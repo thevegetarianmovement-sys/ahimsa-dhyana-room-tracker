@@ -12,10 +12,10 @@ export default function RoomList({ rooms, hotelId, hotel }: { rooms: any[], hote
   const [selectedBed, setSelectedBed] = useState<any>(null)
   const [checkingOut, setCheckingOut] = useState(false)
   const [registering, setRegistering] = useState(false)
-  const [regData, setRegData] = useState({ name: '', phone: '', registrationNumber: '', checkOutDate: '' })
+  const [regData, setRegData] = useState({ name: '', phone: '', registrationNumber: '', checkOutDate: '', gender: '' })
   
   const [groupBookingRoom, setGroupBookingRoom] = useState<any>(null)
-  const [groupData, setGroupData] = useState<{name: string, phone: string, registrationNumber: string, checkOutDate: string}[]>([])
+  const [groupData, setGroupData] = useState<{name: string, phone: string, registrationNumber: string, checkOutDate: string, gender: string}[]>([])
 
   async function handleCheckOut(allocId: string) {
     if (!confirm("Are you sure you want to check out this participant?")) return
@@ -52,7 +52,7 @@ export default function RoomList({ rooms, hotelId, hotel }: { rooms: any[], hote
         throw new Error(d.error || 'Error registering');
       }
       setSelectedBed(null)
-      setRegData({ name: '', phone: '', registrationNumber: '', checkOutDate: '' })
+      setRegData({ name: '', phone: '', registrationNumber: '', checkOutDate: '', gender: '' })
       router.refresh();
     } catch (e: any) {
       console.error(e)
@@ -90,7 +90,7 @@ export default function RoomList({ rooms, hotelId, hotel }: { rooms: any[], hote
     if (available === 0) return alert('This room is full.')
     
     // Initialize empty array for available beds
-    setGroupData(Array(available).fill(null).map(() => ({ name: '', phone: '', registrationNumber: '', checkOutDate: '' })))
+    setGroupData(Array(available).fill(null).map(() => ({ name: '', phone: '', registrationNumber: '', checkOutDate: '', gender: '' })))
     setGroupBookingRoom(room)
   }
 
@@ -374,6 +374,19 @@ export default function RoomList({ rooms, hotelId, hotel }: { rooms: any[], hote
                         }}
                         className="w-full border px-3 py-2 rounded focus:ring focus:outline-none" 
                       />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium mb-1">Gender</label>
+                      <select 
+                        value={regData.gender} 
+                        onChange={e => setRegData({...regData, gender: e.target.value})}
+                        className="w-full border px-3 py-2 rounded focus:ring focus:outline-none bg-white" 
+                      >
+                        <option value="">Select Gender</option>
+                        <option value="MALE">Male</option>
+                        <option value="FEMALE">Female</option>
+                        <option value="OTHER">Other</option>
+                      </select>
                     </div>
                     <div>
                       <label className="block text-sm font-medium mb-1">Phone (Optional)</label>

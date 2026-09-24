@@ -105,7 +105,7 @@ export const checkOutAllocation = async (allocationId: string) => {
 }
 
 export const registerAndAllocate = async (
-  data: { name: string, registrationNumber?: string, phone?: string, checkOutDate?: string },
+  data: { name: string, registrationNumber?: string, phone?: string, checkOutDate?: string, gender?: string },
   locationId: string,
   bedId: string,
   type: 'HOTEL' | 'SHAD'
@@ -166,7 +166,7 @@ export const registerAndAllocate = async (
 }
 
 export const groupRegisterAndAllocate = async (
-  people: { name: string, registrationNumber?: string, phone?: string, checkOutDate?: string }[],
+  people: { name: string, registrationNumber?: string, phone?: string, checkOutDate?: string, gender?: string }[],
   locationId: string,
   roomId: string
 ) => {

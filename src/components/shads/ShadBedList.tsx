@@ -11,7 +11,7 @@ export default function ShadBedList({ beds, shadId, shad }: { beds: any[], shadI
   const [selectedBed, setSelectedBed] = useState<any>(null)
   const [checkingOut, setCheckingOut] = useState(false)
   const [registering, setRegistering] = useState(false)
-  const [regData, setRegData] = useState({ name: '', phone: '', registrationNumber: '', checkOutDate: '' })
+  const [regData, setRegData] = useState({ name: '', phone: '', registrationNumber: '', checkOutDate: '', gender: '' })
 
   async function handleCheckOut(allocId: string) {
     if (!confirm("Are you sure you want to check out this participant?")) return
@@ -48,7 +48,7 @@ export default function ShadBedList({ beds, shadId, shad }: { beds: any[], shadI
         throw new Error(d.error || 'Error registering');
       }
       setSelectedBed(null)
-      setRegData({ name: '', phone: '', registrationNumber: '', checkOutDate: '' })
+      setRegData({ name: '', phone: '', registrationNumber: '', checkOutDate: '', gender: '' })
       router.refresh();
     } catch (e: any) {
       console.error(e)
