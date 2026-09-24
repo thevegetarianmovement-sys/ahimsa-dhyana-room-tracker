@@ -28,7 +28,8 @@ export default function MobileNav({ isAdmin }: { isAdmin: boolean }) {
               <a href="/participants" className="block py-2 px-4 rounded hover:bg-slate-800">Participants</a>
               <a href="/hotels" className="block py-2 px-4 rounded hover:bg-slate-800">Hotels</a>
               <a href="/shads" className="block py-2 px-4 rounded hover:bg-slate-800">Shads</a>
-              <a href="/reports" className="block py-2 px-4 rounded hover:bg-slate-800">Reports</a>
+              <a href="/volunteers" className="block py-2 px-4 rounded hover:bg-slate-800">Volunteers</a>
+                <a href="/reports" className="block py-2 px-4 rounded hover:bg-slate-800">Reports</a>
             </>
           )}
           <div className="pt-2 mt-2 border-t border-slate-700">

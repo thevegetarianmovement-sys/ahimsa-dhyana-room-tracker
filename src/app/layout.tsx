@@ -48,7 +48,8 @@ export default async function RootLayout({
                     <a href="/participants" className="block py-2 px-4 rounded hover:bg-slate-800 whitespace-nowrap">Participants</a>
                     <a href="/hotels" className="block py-2 px-4 rounded hover:bg-slate-800 whitespace-nowrap">Hotels</a>
                     <a href="/shads" className="block py-2 px-4 rounded hover:bg-slate-800 whitespace-nowrap">Shads</a>
-                    <a href="/reports" className="block py-2 px-4 rounded hover:bg-slate-800 whitespace-nowrap">Reports</a>
+                    <a href="/volunteers" className="block py-2 px-4 rounded hover:bg-slate-800 whitespace-nowrap">Volunteers</a>
+                      <a href="/reports" className="block py-2 px-4 rounded hover:bg-slate-800 whitespace-nowrap">Reports</a>
                   </>
                 )}
                 <div className="pt-4 mt-4 border-t border-slate-700">
