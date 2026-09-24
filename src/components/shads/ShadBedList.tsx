@@ -238,10 +238,23 @@ export default function ShadBedList({ beds, shadId, shad }: { beds: any[], shadI
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium mb-1">Phone (Optional)</label>
-                    <input 
-                      type="text" 
-                      value={regData.phone} 
+                      <label className="block text-sm font-medium mb-1">Gender</label>
+                      <select 
+                        value={regData.gender} 
+                        onChange={e => setRegData({...regData, gender: e.target.value})}
+                        className="w-full border px-3 py-2 rounded focus:ring focus:outline-none bg-white" 
+                      >
+                        <option value="">Select Gender</option>
+                        <option value="MALE">Male</option>
+                        <option value="FEMALE">Female</option>
+                        <option value="OTHER">Other</option>
+                      </select>
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium mb-1">Phone (Optional)</label>
+                      <input 
+                        type="text" 
+                        value={regData.phone} 
                       onChange={e => setRegData({...regData, phone: e.target.value})}
                       className="w-full border px-3 py-2 rounded focus:ring focus:outline-none" 
                     />
