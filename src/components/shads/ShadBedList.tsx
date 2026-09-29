@@ -11,7 +11,7 @@ export default function ShadBedList({ beds, shadId, shad }: { beds: any[], shadI
   const [selectedBed, setSelectedBed] = useState<any>(null)
   const [checkingOut, setCheckingOut] = useState(false)
   const [registering, setRegistering] = useState(false)
-  const [regData, setRegData] = useState({ name: '', phone: '', registrationNumber: '', checkOutDate: '', gender: '' })
+  const [regData, setRegData] = useState({ name: '', phone: '', registrationNumber: '', checkOutDate: '', checkInDate: '', gender: '' })
   const [familyMode, setFamilyMode] = useState(false);
   const [familyCart, setFamilyCart] = useState<string[]>([]);
   const [autoFamilyModal, setAutoFamilyModal] = useState(false);
@@ -109,7 +109,7 @@ export default function ShadBedList({ beds, shadId, shad }: { beds: any[], shadI
         throw new Error(d.error || 'Error registering');
       }
       setSelectedBed(null)
-      setRegData({ name: '', phone: '', registrationNumber: '', checkOutDate: '', gender: '' })
+      setRegData({ name: '', phone: '', registrationNumber: '', checkOutDate: '', checkInDate: '', gender: '' })
       router.refresh();
     } catch (e: any) {
       console.error(e)
@@ -366,6 +366,15 @@ export default function ShadBedList({ beds, shadId, shad }: { beds: any[], shadI
                       value={regData.registrationNumber} 
                       onChange={e => setRegData({...regData, registrationNumber: e.target.value})}
                       className="w-full border px-3 py-2 rounded focus:ring focus:outline-none" 
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium mb-1">Expected Check-In (Optional)</label>
+                    <input 
+                      type="date" 
+                      value={regData.checkInDate || ''} 
+                      onChange={e => setRegData({...regData, checkInDate: e.target.value})}
+                      className="w-full border px-3 py-2 rounded focus:ring focus:outline-none mb-4" 
                     />
                   </div>
                   <div>

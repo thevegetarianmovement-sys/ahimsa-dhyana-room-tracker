@@ -105,7 +105,7 @@ export const checkOutAllocation = async (allocationId: string) => {
 }
 
 export const registerAndAllocate = async (
-  data: { name: string, registrationNumber?: string, phone?: string, checkOutDate?: string, gender?: string },
+  data: { name: string, registrationNumber?: string, phone?: string, checkInDate?: string, checkOutDate?: string, gender?: string },
   locationId: string,
   bedId: string,
   type: 'HOTEL' | 'SHAD'
@@ -135,7 +135,7 @@ export const registerAndAllocate = async (
   })
 
   // 3. Allocate Accommodation
-  const inDate = new Date()
+  const inDate = data.checkInDate ? new Date(data.checkInDate) : new Date()
   let outDate = new Date('2099-12-31T00:00:00Z')
   if (data.checkOutDate) {
     outDate = new Date(data.checkOutDate)
@@ -166,7 +166,7 @@ export const registerAndAllocate = async (
 }
 
 export const groupRegisterAndAllocate = async (
-  people: { name: string, registrationNumber?: string, phone?: string, checkOutDate?: string, gender?: string }[],
+  people: { name: string, registrationNumber?: string, phone?: string, checkInDate?: string, checkOutDate?: string, gender?: string }[],
   locationId: string,
   roomId: string
 ) => {
@@ -214,7 +214,7 @@ export const groupRegisterAndAllocate = async (
       }
     })
 
-    const inDate = new Date()
+    const inDate = data.checkInDate ? new Date(data.checkInDate) : new Date()
     let outDate = new Date('2099-12-31T00:00:00Z')
     if (data.checkOutDate) {
       outDate = new Date(data.checkOutDate)
@@ -237,7 +237,7 @@ export const groupRegisterAndAllocate = async (
 }
 
 export const familyBookAndAllocate = async (
-  data: { name: string, phone?: string, gender?: string, checkOutDate?: string },
+  data: { name: string, phone?: string, gender?: string, checkInDate?: string, checkOutDate?: string },
   locationId: string,
   type: 'HOTEL' | 'SHAD',
   bookingParams: { autoCount?: number, bedIds?: string[] }
@@ -322,7 +322,7 @@ export const familyBookAndAllocate = async (
     }
   });
 
-  const inDate = new Date();
+  const inDate = data.checkInDate ? new Date(data.checkInDate) : new Date();
   let outDate = new Date('2099-12-31T00:00:00Z');
   if (data.checkOutDate) {
     outDate = new Date(data.checkOutDate);

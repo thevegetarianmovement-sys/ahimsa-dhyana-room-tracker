@@ -12,7 +12,7 @@ export default function RoomList({ rooms, hotelId, hotel }: { rooms: any[], hote
   const [selectedBed, setSelectedBed] = useState<any>(null)
   const [checkingOut, setCheckingOut] = useState(false)
   const [registering, setRegistering] = useState(false)
-  const [regData, setRegData] = useState({ name: '', phone: '', registrationNumber: '', checkOutDate: '', gender: '' })
+  const [regData, setRegData] = useState({ name: '', phone: '', registrationNumber: '', checkOutDate: '', checkInDate: '', gender: '' })
   
   const [groupBookingRoom, setGroupBookingRoom] = useState<any>(null)
     const [familyMode, setFamilyMode] = useState(false);
@@ -113,7 +113,7 @@ export default function RoomList({ rooms, hotelId, hotel }: { rooms: any[], hote
         throw new Error(d.error || 'Error registering');
       }
       setSelectedBed(null)
-      setRegData({ name: '', phone: '', registrationNumber: '', checkOutDate: '', gender: '' })
+      setRegData({ name: '', phone: '', registrationNumber: '', checkOutDate: '', checkInDate: '', gender: '' })
       router.refresh();
     } catch (e: any) {
       console.error(e)
@@ -151,7 +151,7 @@ export default function RoomList({ rooms, hotelId, hotel }: { rooms: any[], hote
     if (available === 0) return alert('This room is full.')
     
     // Initialize empty array for available beds
-    setGroupData(Array(available).fill(null).map(() => ({ name: '', phone: '', registrationNumber: '', checkOutDate: '', gender: '' })))
+    setGroupData(Array(available).fill(null).map(() => ({ name: '', phone: '', registrationNumber: '', checkOutDate: '', checkInDate: '', gender: '' })))
     setGroupBookingRoom(room)
   }
 
@@ -501,6 +501,15 @@ export default function RoomList({ rooms, hotelId, hotel }: { rooms: any[], hote
                     />
                   </div>
                   <div>
+                    <label className="block text-sm font-medium mb-1">Expected Check-In (Optional)</label>
+                    <input 
+                      type="date" 
+                      value={regData.checkInDate || ''} 
+                      onChange={e => setRegData({...regData, checkInDate: e.target.value})}
+                      className="w-full border px-3 py-2 rounded focus:ring focus:outline-none mb-4" 
+                    />
+                  </div>
+                  <div>
                     <label className="block text-sm font-medium mb-1">Expected Check-Out (Optional)</label>
                     <input 
                       type="date" 
@@ -609,6 +618,19 @@ export default function RoomList({ rooms, hotelId, hotel }: { rooms: any[], hote
                           setGroupData(nd);
                         }}
                         className="w-full border px-3 py-2 rounded focus:ring focus:outline-none" 
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium mb-1">Expected Check-In (Optional)</label>
+                      <input 
+                        type="date" 
+                        value={data.checkInDate || ''} 
+                        onChange={(e) => {
+                          const nd = [...groupData];
+                          nd[idx].checkInDate = e.target.value;
+                          setGroupData(nd);
+                        }}
+                        className="w-full border px-3 py-2 rounded focus:ring focus:outline-none mb-4" 
                       />
                     </div>
                     <div>
