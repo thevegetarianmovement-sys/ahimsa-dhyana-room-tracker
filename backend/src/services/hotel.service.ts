@@ -144,6 +144,11 @@ export const deleteHotel = async (id: string) => {
     where: { bedId: { in: bedIds } }
   });
 
+  // Delete all volunteer shifts tied to this hotel
+  await prisma.volunteerShift.deleteMany({
+    where: { hotelId: id }
+  });
+
   // Now delete the hotel (rooms and beds cascade)
   return await prisma.hotel.delete({ where: { id } });
 }
