@@ -19,7 +19,7 @@ export default function RoomList({ rooms, hotelId, hotel }: { rooms: any[], hote
   const [familyCart, setFamilyCart] = useState<string[]>([]);
   const [autoFamilyModal, setAutoFamilyModal] = useState(false);
   const [manualFamilyModal, setManualFamilyModal] = useState(false);
-  const [familyData, setFamilyData] = useState({ name: '', phone: '', gender: '', checkOutDate: '', autoCount: '' });
+  const [familyData, setFamilyData] = useState({ name: '', phone: '', gender: '', checkInDate: '', checkOutDate: '', autoCount: '' });
   
   const handleBedClick = (bed: any, room: any) => {
     if (familyMode) {
@@ -42,8 +42,9 @@ export default function RoomList({ rooms, hotelId, hotel }: { rooms: any[], hote
           name: familyData.name,
           phone: familyData.phone,
           gender: familyData.gender,
-          checkOutDate: familyData.checkOutDate
-        },
+            checkInDate: familyData.checkInDate,
+            checkOutDate: familyData.checkOutDate
+          },
         locationId: hotelId,
         type: 'HOTEL',
         bookingParams: {
@@ -66,7 +67,7 @@ export default function RoomList({ rooms, hotelId, hotel }: { rooms: any[], hote
       setManualFamilyModal(false);
       setFamilyMode(false);
       setFamilyCart([]);
-      setFamilyData({ name: '', phone: '', gender: '', checkOutDate: '', autoCount: '' });
+      setFamilyData({ name: '', phone: '', gender: '', checkInDate: '', checkOutDate: '', autoCount: '' });
       router.refresh();
     } catch (e: any) {
       console.error(e);
@@ -336,9 +337,17 @@ export default function RoomList({ rooms, hotelId, hotel }: { rooms: any[], hote
                   </select>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium mb-1">Phone (Optional)</label>
-                  <input type="text" value={familyData.phone} onChange={e => setFamilyData({...familyData, phone: e.target.value})} className="w-full border px-3 py-2 rounded focus:ring" />
-                </div>
+                    <label className="block text-sm font-medium mb-1">Phone (Optional)</label>
+                    <input type="text" value={familyData.phone} onChange={e => setFamilyData({...familyData, phone: e.target.value})} className="w-full border px-3 py-2 rounded focus:ring" />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium mb-1">Expected Check-In (Optional)</label>
+                    <input type="date" value={familyData.checkInDate || ''} onChange={e => setFamilyData({...familyData, checkInDate: e.target.value})} className="w-full border px-3 py-2 rounded focus:ring" />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium mb-1">Expected Check-Out (Optional)</label>
+                    <input type="date" value={familyData.checkOutDate || ''} onChange={e => setFamilyData({...familyData, checkOutDate: e.target.value})} className="w-full border px-3 py-2 rounded focus:ring" />
+                  </div>
                 <button 
                   onClick={() => submitFamilyBooking('AUTO')}
                   disabled={registering || !familyData.name || !familyData.autoCount}
@@ -371,9 +380,17 @@ export default function RoomList({ rooms, hotelId, hotel }: { rooms: any[], hote
                   </select>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium mb-1">Phone (Optional)</label>
-                  <input type="text" value={familyData.phone} onChange={e => setFamilyData({...familyData, phone: e.target.value})} className="w-full border px-3 py-2 rounded focus:ring" />
-                </div>
+                    <label className="block text-sm font-medium mb-1">Phone (Optional)</label>
+                    <input type="text" value={familyData.phone} onChange={e => setFamilyData({...familyData, phone: e.target.value})} className="w-full border px-3 py-2 rounded focus:ring" />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium mb-1">Expected Check-In (Optional)</label>
+                    <input type="date" value={familyData.checkInDate || ''} onChange={e => setFamilyData({...familyData, checkInDate: e.target.value})} className="w-full border px-3 py-2 rounded focus:ring" />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium mb-1">Expected Check-Out (Optional)</label>
+                    <input type="date" value={familyData.checkOutDate || ''} onChange={e => setFamilyData({...familyData, checkOutDate: e.target.value})} className="w-full border px-3 py-2 rounded focus:ring" />
+                  </div>
                 <button 
                   onClick={() => submitFamilyBooking('MANUAL')}
                   disabled={registering || !familyData.name}
