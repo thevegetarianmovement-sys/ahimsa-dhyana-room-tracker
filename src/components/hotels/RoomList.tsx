@@ -80,6 +80,28 @@ export default function RoomList({ rooms, hotelId, hotel }: { rooms: any[], hote
 
   const [groupData, setGroupData] = useState<{name: string, phone: string, registrationNumber: string, checkInDate: string, checkOutDate: string, gender: string}[]>([])
 
+  
+  const editRoomName = async (roomId: string, currentName: string) => {
+    const newName = window.prompt("Enter new room name:", currentName);
+    if (!newName || newName.trim() === '' || newName === currentName) return;
+    
+    try {
+      const res = await fetch(`/api/hotels/rooms/${roomId}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify({ number: newName.trim() })
+      });
+      if (!res.ok) {
+        const d = await res.json();
+        throw new Error(d.error || 'Failed to rename room');
+      }
+      router.refresh();
+    } catch (e: any) {
+      alert(e.message);
+    }
+  };
+
   async function handleCheckOut(allocId: string) {
     if (!confirm("Are you sure you want to check out this participant?")) return
     setCheckingOut(true)
@@ -252,7 +274,12 @@ export default function RoomList({ rooms, hotelId, hotel }: { rooms: any[], hote
             <div key={room.id} className="bg-white border rounded-lg shadow-sm p-6">
               <div className="flex justify-between items-center mb-4">
                 <div className="flex items-center space-x-4">
-                  <h3 className="text-xl font-bold">Room {room.number}</h3>
+                  <h3 className="text-xl font-bold flex items-center gap-2">
+                      Room {room.number}
+                      <button onClick={() => editRoomName(room.id, room.number)} className="text-slate-400 hover:text-indigo-600" title="Edit Room Name">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                      </button>
+                    </h3>
                   <span className="bg-slate-100 text-slate-600 px-3 py-1 rounded-full text-sm font-medium">
                     {room.capacity} Beds
                   </span>

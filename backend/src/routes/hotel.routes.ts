@@ -17,6 +17,7 @@ router.get('/:id', requireAuth(), hotelController.getHotelById)
 router.post('/', requireAuth(['ADMIN']), hotelController.createHotel)
 router.put('/:id', requireAuth(['ADMIN']), hotelController.updateHotel)
 router.post('/:id/rooms', requireAuth(['ADMIN']), hotelController.addRoomToHotel)
+router.put('/rooms/:roomId', requireAuth(['ADMIN']), hotelController.updateRoom)
 router.delete('/rooms/:roomId', requireAuth(['ADMIN']), hotelController.deleteRoom)
 
 router.delete('/:id', requireAuth(['ADMIN']), hotelController.deleteHotel)

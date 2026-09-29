@@ -1,0 +1,43 @@
+const fs = require('fs');
+
+const path = 'src/components/hotels/RoomList.tsx';
+let content = fs.readFileSync(path, 'utf8');
+
+const newFn = `
+  const editRoomName = async (roomId: string, currentName: string) => {
+    const newName = window.prompt("Enter new room name:", currentName);
+    if (!newName || newName.trim() === '' || newName === currentName) return;
+    
+    try {
+      const res = await fetch(\`/api/hotels/rooms/\${roomId}\`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify({ number: newName.trim() })
+      });
+      if (!res.ok) {
+        const d = await res.json();
+        throw new Error(d.error || 'Failed to rename room');
+      }
+      router.refresh();
+    } catch (e: any) {
+      alert(e.message);
+    }
+  };
+
+  async function handleCheckOut`;
+
+content = content.replace(/async function handleCheckOut/g, newFn);
+
+const oldHeader = `<h3 className="text-xl font-bold">Room {room.number}</h3>`;
+const newHeader = `<h3 className="text-xl font-bold flex items-center gap-2">
+                      Room {room.number}
+                      <button onClick={() => editRoomName(room.id, room.number)} className="text-slate-400 hover:text-indigo-600" title="Edit Room Name">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                      </button>
+                    </h3>`;
+
+content = content.replace(oldHeader, newHeader);
+
+fs.writeFileSync(path, content);
+console.log('Fixed edit room frontend');

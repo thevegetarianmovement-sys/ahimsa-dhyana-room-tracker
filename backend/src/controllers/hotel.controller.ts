@@ -51,6 +51,17 @@ export const addRoomToHotel = async (req: Request, res: Response): Promise<void>
   }
 }
 
+
+export const updateRoom = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const { number } = req.body;
+    const room = await hotelService.updateRoom(req.params.roomId as string, number);
+    res.status(200).json(room);
+  } catch (error: any) {
+    res.status(400).json({ error: error.message || 'Failed to update room' });
+  }
+}
+
 export const deleteRoom = async (req: Request, res: Response): Promise<void> => {
   try {
     await hotelService.deleteRoom(req.params.roomId as string)

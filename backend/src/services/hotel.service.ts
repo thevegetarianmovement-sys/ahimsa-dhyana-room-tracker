@@ -123,6 +123,24 @@ export const addRoomToHotel = async (hotelId: string, data: { number: string, ca
   }
 }
 
+
+export const updateRoom = async (roomId: string, number: string) => {
+  const existing = await prisma.room.findFirst({
+    where: { 
+      number,
+      hotelId: (await prisma.room.findUnique({ where: { id: roomId } }))?.hotelId
+    }
+  });
+  if (existing && existing.id !== roomId) {
+    throw new Error('A room with this name already exists in this hotel.');
+  }
+
+  return await prisma.room.update({
+    where: { id: roomId },
+    data: { number }
+  });
+}
+
 export const deleteRoom = async (roomId: string) => {
   return await prisma.room.delete({
     where: { id: roomId }
