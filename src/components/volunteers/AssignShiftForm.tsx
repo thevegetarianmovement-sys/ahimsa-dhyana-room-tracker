@@ -88,7 +88,7 @@ export default function AssignShiftForm({ volunteerId, hotels, shads }: { volunt
           <select name="locationId" required className="w-full border px-3 py-2 rounded">
             <option value="">-- Choose {category === 'HOTEL' ? 'Hotel' : 'Shad'} --</option>
             {category === 'HOTEL' 
-              ? hotels.map(h => <option key={h.id} value={h.id}>{h.name}</option>)
+              ? [...hotels].sort((a: any,b: any) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()).map((h: any) => <option key={h.id} value={h.id}>{h.name} {new Date(h.createdAt) > new Date("2026-09-28") ? "⭐ (Ready)" : ""}</option>)
               : shads.map(s => <option key={s.id} value={s.id}>{s.name}</option>)
             }
           </select>

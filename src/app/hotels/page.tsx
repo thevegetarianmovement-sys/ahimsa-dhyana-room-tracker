@@ -15,6 +15,7 @@ export default async function HotelsPage() {
   }
   
   const hotels = await res.json()
+hotels.sort((a: any, b: any) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
 
   let totalBeds = 0
   let occupiedBeds = 0
@@ -64,7 +65,10 @@ export default async function HotelsPage() {
           return (
             <Link key={hotel.id} href={`/hotels/${hotel.id}`} className="block">
               <div className="bg-white p-6 rounded-lg shadow border hover:border-blue-500 transition-colors">
-                <h3 className="text-xl font-bold mb-2">{hotel.name}</h3>
+                <h3 className="text-xl font-bold mb-2">
+                    {hotel.name}
+                    {new Date(hotel.createdAt) > new Date("2026-09-28") && <span className="ml-2 text-xs bg-green-100 text-green-800 px-2 py-1 rounded-full align-middle border border-green-200 shadow-sm">⭐ Ready</span>}
+                  </h3>
                 <p className="text-sm text-slate-500 mb-4">{hotel.location}</p>
                 <div className="flex justify-between items-center text-sm">
                   <span className="font-medium">Capacity: {hTotalBeds}</span>
