@@ -373,7 +373,25 @@ export default function RoomList({ rooms, hotelId, hotel }: { rooms: any[], hote
             <form onSubmit={handleGroupRegister} className="space-y-6">
               {groupData.map((data, idx) => (
                 <div key={idx} className="bg-slate-50 p-4 rounded-lg border">
-                  <h4 className="font-bold text-slate-700 mb-3">Bed {idx + 1}</h4>
+                  <div className="flex justify-between items-center mb-3">
+                      <h4 className="font-bold text-slate-700">Bed {idx + 1}</h4>
+                      {idx === 0 && groupData.length > 1 && (
+                        <button 
+                          type="button" 
+                          onClick={() => {
+                            const nd = [...groupData];
+                            const first = nd[0];
+                            for(let i=1; i<nd.length; i++) {
+                              nd[i] = { ...first, name: first.name ? first.name + (i > 0 ? ' (Guest ' + i + ')' : '') : '' };
+                            }
+                            setGroupData(nd);
+                          }}
+                          className="text-xs bg-blue-100 text-blue-700 px-2 py-1 rounded font-bold hover:bg-blue-200 transition-colors"
+                        >
+                          Copy details to all beds
+                        </button>
+                      )}
+                    </div>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
                       <label className="block text-sm font-medium mb-1">Name</label>
