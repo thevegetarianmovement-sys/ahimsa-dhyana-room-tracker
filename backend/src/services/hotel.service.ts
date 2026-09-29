@@ -128,3 +128,22 @@ export const deleteRoom = async (roomId: string) => {
     where: { id: roomId }
   })
 }
+
+export const deleteHotel = async (id: string) => {
+  // Find all beds in this hotel
+  const hotel = await prisma.hotel.findUnique({
+    where: { id },
+    include: { rooms: { include: { beds: true } } }
+  });
+  if (!hotel) throw new Error('Hotel not found');
+
+  const bedIds = hotel.rooms.flatMap(r => r.beds.map(b => b.id));
+  
+  // Delete all allocations tied to these beds
+  await prisma.accommodationAllocation.deleteMany({
+    where: { bedId: { in: bedIds } }
+  });
+
+  // Now delete the hotel (rooms and beds cascade)
+  return await prisma.hotel.delete({ where: { id } });
+}

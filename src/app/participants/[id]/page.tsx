@@ -1,3 +1,4 @@
+import DeleteParticipantButton from "@/components/participants/DeleteParticipantButton"
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { notFound } from 'next/navigation'
@@ -69,6 +70,7 @@ export default async function ParticipantDetailsPage({ params }: { params: { id:
         <div>
           <h2 className="text-xl font-bold mb-4">Edit Profile</h2>
           <ParticipantForm initialData={participant} categories={categories} />
+          <DeleteParticipantButton participantId={participant.id} />
         </div>
 
         <div>

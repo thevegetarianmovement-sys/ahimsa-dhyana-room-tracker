@@ -13,7 +13,7 @@ export const getHotels = async (req: Request, res: Response): Promise<void> => {
 
 export const getHotelById = async (req: Request, res: Response): Promise<void> => {
   try {
-    const hotel = await hotelService.getHotelById(req.params.id as string)
+    const hotel = await hotelService.getHotelById(String(String((req.params.id as string))) as string)
     if (!hotel) {
       res.status(404).json({ error: 'Not found' })
       return
@@ -35,7 +35,7 @@ export const createHotel = async (req: Request, res: Response): Promise<void> =>
 
 export const updateHotel = async (req: Request, res: Response): Promise<void> => {
   try {
-    const hotel = await hotelService.updateHotel(req.params.id as string, req.body)
+    const hotel = await hotelService.updateHotel((req.params.id as string) as string, req.body)
     res.json(hotel)
   } catch (error) {
     res.status(500).json({ error: 'Failed to update hotel' })
@@ -44,7 +44,7 @@ export const updateHotel = async (req: Request, res: Response): Promise<void> =>
 
 export const addRoomToHotel = async (req: Request, res: Response): Promise<void> => {
   try {
-    await hotelService.addRoomToHotel(req.params.id as string, req.body)
+    await hotelService.addRoomToHotel((req.params.id as string) as string, req.body)
     res.status(201).json({ success: true })
   } catch (error: any) {
     res.status(400).json({ error: error.message || 'Failed to add room' })
@@ -57,5 +57,14 @@ export const deleteRoom = async (req: Request, res: Response): Promise<void> => 
     res.status(200).json({ success: true })
   } catch (error) {
     res.status(500).json({ error: 'Failed to delete room' })
+  }
+}
+
+export const deleteHotel = async (req: Request, res: Response): Promise<void> => {
+  try {
+    await hotelService.deleteHotel((req.params.id as string));
+    res.json({ message: 'Hotel deleted successfully' });
+  } catch (error: any) {
+    res.status(400).json({ error: error.message || 'Failed to delete hotel' });
   }
 }

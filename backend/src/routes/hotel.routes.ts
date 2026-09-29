@@ -19,4 +19,6 @@ router.put('/:id', requireAuth(['ADMIN']), hotelController.updateHotel)
 router.post('/:id/rooms', requireAuth(['ADMIN']), hotelController.addRoomToHotel)
 router.delete('/rooms/:roomId', requireAuth(['ADMIN']), hotelController.deleteRoom)
 
+router.delete('/:id', requireAuth(['ADMIN']), hotelController.deleteHotel)
+
 export default router

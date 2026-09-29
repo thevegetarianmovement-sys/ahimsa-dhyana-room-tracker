@@ -14,7 +14,7 @@ export const getParticipants = async (req: Request, res: Response): Promise<void
 
 export const getParticipantById = async (req: Request, res: Response): Promise<void> => {
   try {
-    const participant = await participantService.getParticipantById(req.params.id as string)
+    const participant = await participantService.getParticipantById(String(String((req.params.id as string))) as string)
     if (!participant) {
       res.status(404).json({ error: 'Not found' })
       return
@@ -45,7 +45,7 @@ export const createParticipant = async (req: Request, res: Response): Promise<vo
 
 export const updateParticipant = async (req: Request, res: Response): Promise<void> => {
   try {
-    const participant = await participantService.updateParticipant(req.params.id as string, req.body)
+    const participant = await participantService.updateParticipant((req.params.id as string) as string, req.body)
     res.json(participant)
   } catch (error) {
     res.status(500).json({ error: 'Failed to update participant' })
@@ -58,5 +58,14 @@ export const bulkCreateParticipants = async (req: Request, res: Response): Promi
     res.status(201).json(result)
   } catch (error) {
     res.status(500).json({ error: 'Failed to bulk import participants' })
+  }
+}
+
+export const deleteParticipant = async (req: Request, res: Response): Promise<void> => {
+  try {
+    await participantService.deleteParticipant((req.params.id as string));
+    res.json({ message: 'Participant deleted successfully' });
+  } catch (error: any) {
+    res.status(400).json({ error: error.message || 'Failed to delete participant' });
   }
 }

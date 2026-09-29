@@ -1,3 +1,4 @@
+import DeleteHotelButton from "@/components/hotels/DeleteHotelButton"
 /* eslint-disable */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import Link from 'next/link'
@@ -58,6 +59,7 @@ export default async function HotelDetailsPage({ params }: { params: { id: strin
             ↓ Export CSV
           </a>
           <ShareHotelButton name={hotel.name} address={hotel.address} googleMapsLink={hotel.googleMapsLink} />
+          <DeleteHotelButton hotelId={hotel.id} />
             <PrintButton />
         </div>
       </div>

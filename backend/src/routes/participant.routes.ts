@@ -13,4 +13,6 @@ router.get('/:id', participantController.getParticipantById)
 router.post('/', participantController.createParticipant)
 router.put('/:id', participantController.updateParticipant)
 
+router.delete('/:id', requireAuth(['ADMIN']), participantController.deleteParticipant)
+
 export default router

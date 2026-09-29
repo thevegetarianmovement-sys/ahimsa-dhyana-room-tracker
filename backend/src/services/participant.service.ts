@@ -134,3 +134,12 @@ export const bulkCreateParticipants = async (participants: { name: string, phone
 
   return { successCount, skipCount }
 }
+
+export const deleteParticipant = async (id: string) => {
+  // Delete allocations first
+  await prisma.accommodationAllocation.deleteMany({
+    where: { participantId: id }
+  });
+  
+  return await prisma.participant.delete({ where: { id } });
+}
