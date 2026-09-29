@@ -2,6 +2,12 @@
 import Link from 'next/link'
 
 export default async function HotelsPage() {
+const readyHotels = [
+  "MARJAN INTERNATIONAL", "GOPI RESIDENCY", "THREE CASTLE", "SRI SAI RESIDENCY",
+  "HOTEL AADAAB", "NEW STAR LODGE", "BLUE STAR LODGE", "WEST INN",
+  "SAI KIRAN LODGE", "HOTEL SAI PRAKASH", "HOTEL AAHWAANAM", "HOTEL TULASI"
+];
+const isReady = (name: string) => readyHotels.some(r => name.toUpperCase().includes(r.toUpperCase()));
   const sessionCookie = require('next/headers').cookies().get('session')?.value || ''
   
   const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:4000'}/api/hotels`, {
@@ -15,7 +21,12 @@ export default async function HotelsPage() {
   }
   
   const hotels = await res.json()
-hotels.sort((a: any, b: any) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
+hotels.sort((a: any, b: any) => {
+    const aReady = isReady(a.name) ? 1 : 0;
+    const bReady = isReady(b.name) ? 1 : 0;
+    if (bReady !== aReady) return bReady - aReady;
+    return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+  })
 
   let totalBeds = 0
   let occupiedBeds = 0
@@ -67,7 +78,7 @@ hotels.sort((a: any, b: any) => new Date(b.createdAt).getTime() - new Date(a.cre
               <div className="bg-white p-6 rounded-lg shadow border hover:border-blue-500 transition-colors">
                 <h3 className="text-xl font-bold mb-2">
                     {hotel.name}
-                    {new Date(hotel.createdAt) > new Date("2026-09-28") && <span className="ml-2 text-xs bg-green-100 text-green-800 px-2 py-1 rounded-full align-middle border border-green-200 shadow-sm">⭐ Ready</span>}
+                    {isReady(hotel.name) && <span className="ml-2 text-xs bg-green-100 text-green-800 px-2 py-1 rounded-full align-middle border border-green-200 shadow-sm">⭐ Ready</span>}
                   </h3>
                 <p className="text-sm text-slate-500 mb-4">{hotel.location}</p>
                 <div className="flex justify-between items-center text-sm">

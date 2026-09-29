@@ -4,6 +4,12 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 
+const readyHotels = [
+  "MARJAN INTERNATIONAL", "GOPI RESIDENCY", "THREE CASTLE", "SRI SAI RESIDENCY",
+  "HOTEL AADAAB", "NEW STAR LODGE", "BLUE STAR LODGE", "WEST INN",
+  "SAI KIRAN LODGE", "HOTEL SAI PRAKASH", "HOTEL AAHWAANAM", "HOTEL TULASI"
+];
+const isReady = (name: string) => readyHotels.some(r => name.toUpperCase().includes(r.toUpperCase()));
 export default function AssignShiftForm({ volunteerId, hotels, shads }: { volunteerId: string, hotels: any[], shads: any[] }) {
   const router = useRouter()
   const [loading, setLoading] = useState(false)
@@ -88,7 +94,12 @@ export default function AssignShiftForm({ volunteerId, hotels, shads }: { volunt
           <select name="locationId" required className="w-full border px-3 py-2 rounded">
             <option value="">-- Choose {category === 'HOTEL' ? 'Hotel' : 'Shad'} --</option>
             {category === 'HOTEL' 
-              ? [...hotels].sort((a: any,b: any) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()).map((h: any) => <option key={h.id} value={h.id}>{h.name} {new Date(h.createdAt) > new Date("2026-09-28") ? "⭐ (Ready)" : ""}</option>)
+              ? [...hotels].sort((a: any,b: any) => {
+    const aReady = isReady(a.name) ? 1 : 0;
+    const bReady = isReady(b.name) ? 1 : 0;
+    if (bReady !== aReady) return bReady - aReady;
+    return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+  }).map((h: any) => <option key={h.id} value={h.id}>{h.name} {isReady(h.name) ? "⭐ (Ready)" : ""}</option>)
               : shads.map(s => <option key={s.id} value={s.id}>{s.name}</option>)
             }
           </select>
