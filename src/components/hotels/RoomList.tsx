@@ -19,7 +19,7 @@ export default function RoomList({ rooms, hotelId, hotel }: { rooms: any[], hote
   const [familyCart, setFamilyCart] = useState<string[]>([]);
   const [autoFamilyModal, setAutoFamilyModal] = useState(false);
   const [manualFamilyModal, setManualFamilyModal] = useState(false);
-  const [familyData, setFamilyData] = useState({ name: '', phone: '', gender: '', checkInDate: '', checkOutDate: '', autoCount: '' });
+  const [familyData, setFamilyData] = useState({ name: '', phone: '', maleCount: '', femaleCount: '', checkInDate: '', checkOutDate: '', autoCount: '' });
   
   const handleBedClick = (bed: any, room: any) => {
     if (familyMode) {
@@ -41,7 +41,8 @@ export default function RoomList({ rooms, hotelId, hotel }: { rooms: any[], hote
         data: {
           name: familyData.name,
           phone: familyData.phone,
-          gender: familyData.gender,
+          maleCount: familyData.maleCount ? parseInt(familyData.maleCount) : 0,
+            femaleCount: familyData.femaleCount ? parseInt(familyData.femaleCount) : 0,
             checkInDate: familyData.checkInDate,
             checkOutDate: familyData.checkOutDate
           },
@@ -67,7 +68,7 @@ export default function RoomList({ rooms, hotelId, hotel }: { rooms: any[], hote
       setManualFamilyModal(false);
       setFamilyMode(false);
       setFamilyCart([]);
-      setFamilyData({ name: '', phone: '', gender: '', checkInDate: '', checkOutDate: '', autoCount: '' });
+      setFamilyData({ name: '', phone: '', maleCount: '', femaleCount: '', checkInDate: '', checkOutDate: '', autoCount: '' });
       router.refresh();
     } catch (e: any) {
       console.error(e);
@@ -77,7 +78,7 @@ export default function RoomList({ rooms, hotelId, hotel }: { rooms: any[], hote
     }
   };
 
-  const [groupData, setGroupData] = useState<{name: string, phone: string, registrationNumber: string, checkOutDate: string, gender: string}[]>([])
+  const [groupData, setGroupData] = useState<{name: string, phone: string, registrationNumber: string, checkInDate: string, checkOutDate: string, gender: string}[]>([])
 
   async function handleCheckOut(allocId: string) {
     if (!confirm("Are you sure you want to check out this participant?")) return
@@ -329,13 +330,13 @@ export default function RoomList({ rooms, hotelId, hotel }: { rooms: any[], hote
                   <input type="number" min="1" value={familyData.autoCount} onChange={e => setFamilyData({...familyData, autoCount: e.target.value})} className="w-full border px-3 py-2 rounded focus:ring" />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium mb-1">Gender (Optional)</label>
-                  <select value={familyData.gender} onChange={e => setFamilyData({...familyData, gender: e.target.value})} className="w-full border px-3 py-2 rounded focus:ring bg-white">
-                    <option value="">Mixed / Unspecified</option>
-                    <option value="MALE">Male</option>
-                    <option value="FEMALE">Female</option>
-                  </select>
-                </div>
+                    <label className="block text-sm font-medium mb-1">Number of Males (Optional)</label>
+                    <input type="number" min="0" value={familyData.maleCount} onChange={e => setFamilyData({...familyData, maleCount: e.target.value})} className="w-full border px-3 py-2 rounded focus:ring bg-white" />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium mb-1">Number of Females (Optional)</label>
+                    <input type="number" min="0" value={familyData.femaleCount} onChange={e => setFamilyData({...familyData, femaleCount: e.target.value})} className="w-full border px-3 py-2 rounded focus:ring bg-white" />
+                  </div>
                 <div>
                     <label className="block text-sm font-medium mb-1">Phone (Optional)</label>
                     <input type="text" value={familyData.phone} onChange={e => setFamilyData({...familyData, phone: e.target.value})} className="w-full border px-3 py-2 rounded focus:ring" />
@@ -372,13 +373,13 @@ export default function RoomList({ rooms, hotelId, hotel }: { rooms: any[], hote
                   <input type="text" value={familyData.name} onChange={e => setFamilyData({...familyData, name: e.target.value})} className="w-full border px-3 py-2 rounded focus:ring" />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium mb-1">Gender (Optional)</label>
-                  <select value={familyData.gender} onChange={e => setFamilyData({...familyData, gender: e.target.value})} className="w-full border px-3 py-2 rounded focus:ring bg-white">
-                    <option value="">Mixed / Unspecified</option>
-                    <option value="MALE">Male</option>
-                    <option value="FEMALE">Female</option>
-                  </select>
-                </div>
+                    <label className="block text-sm font-medium mb-1">Number of Males (Optional)</label>
+                    <input type="number" min="0" value={familyData.maleCount} onChange={e => setFamilyData({...familyData, maleCount: e.target.value})} className="w-full border px-3 py-2 rounded focus:ring bg-white" />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium mb-1">Number of Females (Optional)</label>
+                    <input type="number" min="0" value={familyData.femaleCount} onChange={e => setFamilyData({...familyData, femaleCount: e.target.value})} className="w-full border px-3 py-2 rounded focus:ring bg-white" />
+                  </div>
                 <div>
                     <label className="block text-sm font-medium mb-1">Phone (Optional)</label>
                     <input type="text" value={familyData.phone} onChange={e => setFamilyData({...familyData, phone: e.target.value})} className="w-full border px-3 py-2 rounded focus:ring" />
