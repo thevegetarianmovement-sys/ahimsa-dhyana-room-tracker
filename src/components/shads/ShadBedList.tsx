@@ -263,8 +263,8 @@ export default function ShadBedList({ beds, shadId, shad }: { beds: any[], shadI
 
       {/* Bed Details Modal */}
       {selectedBed && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-lg shadow-xl w-full max-w-md p-6 relative">
+        <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center z-50 p-4 animate-in fade-in duration-200">
+          <div className="bg-white rounded-2xl shadow-2xl border border-slate-100 w-full max-w-md p-6 sm:p-8 relative animate-in zoom-in-95 duration-200">
             <button 
               onClick={() => setSelectedBed(null)}
               className="absolute top-4 right-4 text-slate-400 hover:text-slate-600"
@@ -317,7 +317,7 @@ export default function ShadBedList({ beds, shadId, shad }: { beds: any[], shadI
                   </button>
                   <a 
                     href={`/participants/${selectedBed.allocations[0].participantId}`}
-                    className="flex-1 bg-slate-200 text-slate-800 py-2 rounded font-medium hover:bg-slate-300 text-center"
+                    className="flex-1 bg-slate-100 text-slate-700 py-2.5 rounded-xl font-bold hover:bg-slate-200 text-center transition-all"
                   >
                     View Profile
                   </a>
@@ -330,21 +330,21 @@ export default function ShadBedList({ beds, shadId, shad }: { beds: any[], shadI
                 </div>
                 <form onSubmit={handleRegister} className="space-y-4">
                   <div>
-                    <label className="block text-sm font-medium mb-1">Full Name *</label>
+                    <label className="block text-sm font-semibold text-slate-700 mb-1.5">Full Name *</label>
                     <input 
                       type="text" 
                       required 
                       value={regData.name} 
                       onChange={e => setRegData({...regData, name: e.target.value})}
-                      className="w-full border px-3 py-2 rounded focus:ring focus:outline-none" 
+                      className="w-full border border-slate-200 bg-slate-50 px-3 py-2.5 rounded-xl focus:bg-white focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none transition-all" 
                     />
                   </div>
                   <div>
-                      <label className="block text-sm font-medium mb-1">Gender</label>
+                      <label className="block text-sm font-semibold text-slate-700 mb-1.5">Gender</label>
                       <select 
                         value={regData.gender} 
                         onChange={e => setRegData({...regData, gender: e.target.value})}
-                        className="w-full border px-3 py-2 rounded focus:ring focus:outline-none bg-white" 
+                        className="w-full border border-slate-200 bg-slate-50 px-3 py-2.5 rounded-xl focus:bg-white focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none transition-all" 
                       >
                         <option value="">Select Gender</option>
                         <option value="MALE">Male</option>
@@ -353,52 +353,52 @@ export default function ShadBedList({ beds, shadId, shad }: { beds: any[], shadI
                       </select>
                     </div>
                     <div>
-                      <label className="block text-sm font-medium mb-1">Phone (Optional)</label>
+                      <label className="block text-sm font-semibold text-slate-700 mb-1.5">Phone (Optional)</label>
                       <input 
                         type="text" 
                         value={regData.phone} 
                       onChange={e => setRegData({...regData, phone: e.target.value})}
-                      className="w-full border px-3 py-2 rounded focus:ring focus:outline-none" 
+                      className="w-full border border-slate-200 bg-slate-50 px-3 py-2.5 rounded-xl focus:bg-white focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none transition-all" 
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium mb-1">Reg Number (Optional)</label>
+                    <label className="block text-sm font-semibold text-slate-700 mb-1.5">Reg Number (Optional)</label>
                     <input 
                       type="text" 
                       value={regData.registrationNumber} 
                       onChange={e => setRegData({...regData, registrationNumber: e.target.value})}
-                      className="w-full border px-3 py-2 rounded focus:ring focus:outline-none" 
+                      className="w-full border border-slate-200 bg-slate-50 px-3 py-2.5 rounded-xl focus:bg-white focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none transition-all" 
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium mb-1">Expected Check-In (Optional)</label>
+                    <label className="block text-sm font-semibold text-slate-700 mb-1.5">Expected Check-In (Optional)</label>
                     <input 
                       type="date" 
                       value={regData.checkInDate || ''} 
                       onChange={e => setRegData({...regData, checkInDate: e.target.value})}
-                      className="w-full border px-3 py-2 rounded focus:ring focus:outline-none mb-4" 
+                      className="w-full border border-slate-200 bg-slate-50 px-3 py-2.5 rounded-xl focus:bg-white focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none transition-all mb-4" 
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium mb-1">Expected Check-Out (Optional)</label>
+                    <label className="block text-sm font-semibold text-slate-700 mb-1.5">Expected Check-Out (Optional)</label>
                     <input 
                       type="date" 
                       value={regData.checkOutDate} 
                       onChange={e => setRegData({...regData, checkOutDate: e.target.value})}
-                      className="w-full border px-3 py-2 rounded focus:ring focus:outline-none" 
+                      className="w-full border border-slate-200 bg-slate-50 px-3 py-2.5 rounded-xl focus:bg-white focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none transition-all" 
                     />
                   </div>
                   <div className="pt-2 flex gap-3">
                     <button 
                       type="submit" 
                       disabled={registering}
-                      className="flex-1 bg-green-600 text-white py-2 rounded font-medium hover:bg-green-700 disabled:opacity-50"
+                      className="flex-1 bg-gradient-to-r from-emerald-500 to-green-600 text-white py-2.5 rounded-xl font-bold shadow-sm hover:shadow-md disabled:opacity-50 transition-all"
                     >
                       {registering ? 'Assigning...' : 'Register & Assign'}
                     </button>
                     <a 
                       href="/participants/new"
-                      className="flex-1 bg-slate-200 text-slate-800 py-2 rounded font-medium hover:bg-slate-300 text-center text-sm flex items-center justify-center"
+                      className="flex-1 bg-slate-100 text-slate-700 py-2.5 rounded-xl font-bold hover:bg-slate-200 text-center text-sm flex items-center justify-center transition-all"
                     >
                       Full Form
                     </a>
@@ -409,43 +409,43 @@ export default function ShadBedList({ beds, shadId, shad }: { beds: any[], shadI
           
         {/* Auto Family Modal */}
         {autoFamilyModal && (
-          <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-            <div className="bg-white rounded-lg shadow-xl w-full max-w-md p-6 relative">
-              <button onClick={() => setAutoFamilyModal(false)} className="absolute top-4 right-4 text-slate-400">✕</button>
-              <h3 className="text-xl font-bold mb-4 text-purple-900">Auto-Assign Family Booking</h3>
+          <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center z-50 p-4 animate-in fade-in duration-200">
+            <div className="bg-white rounded-2xl shadow-2xl border border-slate-100 w-full max-w-md p-6 sm:p-8 relative animate-in zoom-in-95 duration-200">
+              <button onClick={() => setAutoFamilyModal(false)} className="absolute top-4 right-4 text-slate-400 hover:text-slate-700 bg-slate-50 hover:bg-slate-100 w-8 h-8 flex items-center justify-center rounded-full transition-colors font-bold">X</button>
+              <h3 className="text-2xl font-extrabold tracking-tight mb-4 text-purple-900">Auto-Assign Family Booking</h3>
               <div className="space-y-4">
                 <div>
-                  <label className="block text-sm font-medium mb-1">Family/Main Name *</label>
-                  <input type="text" value={familyData.name} onChange={e => setFamilyData({...familyData, name: e.target.value})} className="w-full border px-3 py-2 rounded focus:ring" />
+                  <label className="block text-sm font-semibold text-slate-700 mb-1.5">Family/Main Name *</label>
+                  <input type="text" value={familyData.name} onChange={e => setFamilyData({...familyData, name: e.target.value})} className="w-full border border-slate-200 bg-slate-50 px-3 py-2.5 rounded-xl focus:bg-white focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none transition-all" />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium mb-1">Number of Beds Needed *</label>
-                  <input type="number" min="1" value={familyData.autoCount} onChange={e => setFamilyData({...familyData, autoCount: e.target.value})} className="w-full border px-3 py-2 rounded focus:ring" />
+                  <label className="block text-sm font-semibold text-slate-700 mb-1.5">Number of Beds Needed *</label>
+                  <input type="number" min="1" value={familyData.autoCount} onChange={e => setFamilyData({...familyData, autoCount: e.target.value})} className="w-full border border-slate-200 bg-slate-50 px-3 py-2.5 rounded-xl focus:bg-white focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none transition-all" />
                 </div>
                 <div>
-                    <label className="block text-sm font-medium mb-1">Number of Males (Optional)</label>
-                    <input type="number" min="0" value={familyData.maleCount} onChange={e => setFamilyData({...familyData, maleCount: e.target.value})} className="w-full border px-3 py-2 rounded focus:ring bg-white" />
+                    <label className="block text-sm font-semibold text-slate-700 mb-1.5">Number of Males (Optional)</label>
+                    <input type="number" min="0" value={familyData.maleCount} onChange={e => setFamilyData({...familyData, maleCount: e.target.value})} className="w-full border border-slate-200 bg-slate-50 px-3 py-2.5 rounded-xl focus:bg-white focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none transition-all" />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium mb-1">Number of Females (Optional)</label>
-                    <input type="number" min="0" value={familyData.femaleCount} onChange={e => setFamilyData({...familyData, femaleCount: e.target.value})} className="w-full border px-3 py-2 rounded focus:ring bg-white" />
+                    <label className="block text-sm font-semibold text-slate-700 mb-1.5">Number of Females (Optional)</label>
+                    <input type="number" min="0" value={familyData.femaleCount} onChange={e => setFamilyData({...familyData, femaleCount: e.target.value})} className="w-full border border-slate-200 bg-slate-50 px-3 py-2.5 rounded-xl focus:bg-white focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none transition-all" />
                   </div>
                 <div>
-                    <label className="block text-sm font-medium mb-1">Phone (Optional)</label>
-                    <input type="text" value={familyData.phone} onChange={e => setFamilyData({...familyData, phone: e.target.value})} className="w-full border px-3 py-2 rounded focus:ring" />
+                    <label className="block text-sm font-semibold text-slate-700 mb-1.5">Phone (Optional)</label>
+                    <input type="text" value={familyData.phone} onChange={e => setFamilyData({...familyData, phone: e.target.value})} className="w-full border border-slate-200 bg-slate-50 px-3 py-2.5 rounded-xl focus:bg-white focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none transition-all" />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium mb-1">Expected Check-In (Optional)</label>
-                    <input type="date" value={familyData.checkInDate || ''} onChange={e => setFamilyData({...familyData, checkInDate: e.target.value})} className="w-full border px-3 py-2 rounded focus:ring" />
+                    <label className="block text-sm font-semibold text-slate-700 mb-1.5">Expected Check-In (Optional)</label>
+                    <input type="date" value={familyData.checkInDate || ''} onChange={e => setFamilyData({...familyData, checkInDate: e.target.value})} className="w-full border border-slate-200 bg-slate-50 px-3 py-2.5 rounded-xl focus:bg-white focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none transition-all" />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium mb-1">Expected Check-Out (Optional)</label>
-                    <input type="date" value={familyData.checkOutDate || ''} onChange={e => setFamilyData({...familyData, checkOutDate: e.target.value})} className="w-full border px-3 py-2 rounded focus:ring" />
+                    <label className="block text-sm font-semibold text-slate-700 mb-1.5">Expected Check-Out (Optional)</label>
+                    <input type="date" value={familyData.checkOutDate || ''} onChange={e => setFamilyData({...familyData, checkOutDate: e.target.value})} className="w-full border border-slate-200 bg-slate-50 px-3 py-2.5 rounded-xl focus:bg-white focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none transition-all" />
                   </div>
                 <button 
                   onClick={() => submitFamilyBooking('AUTO')}
                   disabled={registering || !familyData.name || !familyData.autoCount}
-                  className="w-full bg-purple-600 text-white py-2 rounded font-bold hover:bg-purple-700 disabled:opacity-50 mt-2"
+                  className="w-full bg-gradient-to-r from-purple-600 to-indigo-600 text-white py-3 rounded-xl font-bold shadow-md hover:shadow-lg hover:from-purple-700 hover:to-indigo-700 disabled:opacity-50 transition-all mt-4"
                 >
                   {registering ? 'Processing...' : 'Auto-Assign Now'}
                 </button>
@@ -456,39 +456,39 @@ export default function ShadBedList({ beds, shadId, shad }: { beds: any[], shadI
 
         {/* Manual Family Modal */}
         {manualFamilyModal && (
-          <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-            <div className="bg-white rounded-lg shadow-xl w-full max-w-md p-6 relative">
-              <button onClick={() => setManualFamilyModal(false)} className="absolute top-4 right-4 text-slate-400">✕</button>
-              <h3 className="text-xl font-bold mb-4 text-indigo-900">Book {familyCart.length} Selected Beds</h3>
+          <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center z-50 p-4 animate-in fade-in duration-200">
+            <div className="bg-white rounded-2xl shadow-2xl border border-slate-100 w-full max-w-md p-6 sm:p-8 relative animate-in zoom-in-95 duration-200">
+              <button onClick={() => setManualFamilyModal(false)} className="absolute top-4 right-4 text-slate-400 hover:text-slate-700 bg-slate-50 hover:bg-slate-100 w-8 h-8 flex items-center justify-center rounded-full transition-colors font-bold">X</button>
+              <h3 className="text-2xl font-extrabold tracking-tight mb-4 text-indigo-900">Book {familyCart.length} Selected Beds</h3>
               <div className="space-y-4">
                 <div>
-                  <label className="block text-sm font-medium mb-1">Family/Main Name *</label>
-                  <input type="text" value={familyData.name} onChange={e => setFamilyData({...familyData, name: e.target.value})} className="w-full border px-3 py-2 rounded focus:ring" />
+                  <label className="block text-sm font-semibold text-slate-700 mb-1.5">Family/Main Name *</label>
+                  <input type="text" value={familyData.name} onChange={e => setFamilyData({...familyData, name: e.target.value})} className="w-full border border-slate-200 bg-slate-50 px-3 py-2.5 rounded-xl focus:bg-white focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none transition-all" />
                 </div>
                 <div>
-                    <label className="block text-sm font-medium mb-1">Number of Males (Optional)</label>
-                    <input type="number" min="0" value={familyData.maleCount} onChange={e => setFamilyData({...familyData, maleCount: e.target.value})} className="w-full border px-3 py-2 rounded focus:ring bg-white" />
+                    <label className="block text-sm font-semibold text-slate-700 mb-1.5">Number of Males (Optional)</label>
+                    <input type="number" min="0" value={familyData.maleCount} onChange={e => setFamilyData({...familyData, maleCount: e.target.value})} className="w-full border border-slate-200 bg-slate-50 px-3 py-2.5 rounded-xl focus:bg-white focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none transition-all" />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium mb-1">Number of Females (Optional)</label>
-                    <input type="number" min="0" value={familyData.femaleCount} onChange={e => setFamilyData({...familyData, femaleCount: e.target.value})} className="w-full border px-3 py-2 rounded focus:ring bg-white" />
+                    <label className="block text-sm font-semibold text-slate-700 mb-1.5">Number of Females (Optional)</label>
+                    <input type="number" min="0" value={familyData.femaleCount} onChange={e => setFamilyData({...familyData, femaleCount: e.target.value})} className="w-full border border-slate-200 bg-slate-50 px-3 py-2.5 rounded-xl focus:bg-white focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none transition-all" />
                   </div>
                 <div>
-                    <label className="block text-sm font-medium mb-1">Phone (Optional)</label>
-                    <input type="text" value={familyData.phone} onChange={e => setFamilyData({...familyData, phone: e.target.value})} className="w-full border px-3 py-2 rounded focus:ring" />
+                    <label className="block text-sm font-semibold text-slate-700 mb-1.5">Phone (Optional)</label>
+                    <input type="text" value={familyData.phone} onChange={e => setFamilyData({...familyData, phone: e.target.value})} className="w-full border border-slate-200 bg-slate-50 px-3 py-2.5 rounded-xl focus:bg-white focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none transition-all" />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium mb-1">Expected Check-In (Optional)</label>
-                    <input type="date" value={familyData.checkInDate || ''} onChange={e => setFamilyData({...familyData, checkInDate: e.target.value})} className="w-full border px-3 py-2 rounded focus:ring" />
+                    <label className="block text-sm font-semibold text-slate-700 mb-1.5">Expected Check-In (Optional)</label>
+                    <input type="date" value={familyData.checkInDate || ''} onChange={e => setFamilyData({...familyData, checkInDate: e.target.value})} className="w-full border border-slate-200 bg-slate-50 px-3 py-2.5 rounded-xl focus:bg-white focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none transition-all" />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium mb-1">Expected Check-Out (Optional)</label>
-                    <input type="date" value={familyData.checkOutDate || ''} onChange={e => setFamilyData({...familyData, checkOutDate: e.target.value})} className="w-full border px-3 py-2 rounded focus:ring" />
+                    <label className="block text-sm font-semibold text-slate-700 mb-1.5">Expected Check-Out (Optional)</label>
+                    <input type="date" value={familyData.checkOutDate || ''} onChange={e => setFamilyData({...familyData, checkOutDate: e.target.value})} className="w-full border border-slate-200 bg-slate-50 px-3 py-2.5 rounded-xl focus:bg-white focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none transition-all" />
                   </div>
                 <button 
                   onClick={() => submitFamilyBooking('MANUAL')}
                   disabled={registering || !familyData.name}
-                  className="w-full bg-indigo-600 text-white py-2 rounded font-bold hover:bg-indigo-700 disabled:opacity-50 mt-2"
+                  className="w-full bg-gradient-to-r from-indigo-600 to-blue-600 text-white py-3 rounded-xl font-bold shadow-md hover:shadow-lg hover:from-indigo-700 hover:to-blue-700 disabled:opacity-50 transition-all mt-4"
                 >
                   {registering ? 'Processing...' : 'Book Selected Beds Now'}
                 </button>
