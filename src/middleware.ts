@@ -8,9 +8,9 @@ export async function middleware(request: NextRequest) {
   const sessionCookie = request.cookies.get('session')?.value
 
   // Public paths
-  if (path === '/login' || path === '/' || path.startsWith('/api/') || path.startsWith('/_next')) {
+  if (path === '/login' || path === '/volunteer/login' || path === '/' || path.startsWith('/api/') || path.startsWith('/_next')) {
     // If logged in and trying to go to login or home, redirect based on role
-    if ((path === '/login' || path === '/') && sessionCookie) {
+    if ((path === '/login' || path === '/volunteer/login' || path === '/') && sessionCookie) {
       try {
         const session = await decrypt(sessionCookie)
         if (session.role === 'ADMIN') return NextResponse.redirect(new URL('/dashboard', request.url))
