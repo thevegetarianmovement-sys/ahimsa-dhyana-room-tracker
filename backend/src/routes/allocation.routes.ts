@@ -19,4 +19,6 @@ router.post('/register', requireAuth(['ADMIN', 'VOLUNTEER']), allocationControll
 // groupRegisterAndAllocate requires ADMIN or VOLUNTEER
 router.post('/group-register', requireAuth(['ADMIN', 'VOLUNTEER']), allocationController.groupRegisterAndAllocate)
 
+router.post('/family-book', requireAuth(['ADMIN', 'VOLUNTEER']), allocationController.familyBookAndAllocate)
+
 export default router

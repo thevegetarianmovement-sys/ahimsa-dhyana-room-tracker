@@ -12,6 +12,67 @@ export default function ShadBedList({ beds, shadId, shad }: { beds: any[], shadI
   const [checkingOut, setCheckingOut] = useState(false)
   const [registering, setRegistering] = useState(false)
   const [regData, setRegData] = useState({ name: '', phone: '', registrationNumber: '', checkOutDate: '', gender: '' })
+  const [familyMode, setFamilyMode] = useState(false);
+  const [familyCart, setFamilyCart] = useState<string[]>([]);
+  const [autoFamilyModal, setAutoFamilyModal] = useState(false);
+  const [manualFamilyModal, setManualFamilyModal] = useState(false);
+  const [familyData, setFamilyData] = useState({ name: '', phone: '', gender: '', checkOutDate: '', autoCount: '' });
+
+  const handleBedClick = (bed: any) => {
+    if (familyMode) {
+      if (bed.allocations.length > 0) return; // Ignore occupied beds
+      if (familyCart.includes(bed.id)) {
+        setFamilyCart(familyCart.filter(id => id !== bed.id));
+      } else {
+        setFamilyCart([...familyCart, bed.id]);
+      }
+    } else {
+      setSelectedBed({ ...bed });
+    }
+  };
+
+  const submitFamilyBooking = async (type: 'AUTO' | 'MANUAL') => {
+    setRegistering(true);
+    try {
+      const payload = {
+        data: {
+          name: familyData.name,
+          phone: familyData.phone,
+          gender: familyData.gender,
+          checkOutDate: familyData.checkOutDate
+        },
+        locationId: shadId,
+        type: 'SHAD',
+        bookingParams: {
+          autoCount: type === 'AUTO' ? parseInt(familyData.autoCount) : undefined,
+          bedIds: type === 'MANUAL' ? familyCart : undefined
+        }
+      };
+
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:4000'}/api/allocations/family-book`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify(payload)
+      });
+      if (!res.ok) {
+        const d = await res.json();
+        throw new Error(d.error || 'Error booking family');
+      }
+      setAutoFamilyModal(false);
+      setManualFamilyModal(false);
+      setFamilyMode(false);
+      setFamilyCart([]);
+      setFamilyData({ name: '', phone: '', gender: '', checkOutDate: '', autoCount: '' });
+      router.refresh();
+    } catch (e: any) {
+      console.error(e);
+      alert(e.message);
+    } finally {
+      setRegistering(false);
+    }
+  };
+
 
   async function handleCheckOut(allocId: string) {
     if (!confirm("Are you sure you want to check out this participant?")) return
@@ -143,7 +204,7 @@ export default function ShadBedList({ beds, shadId, shad }: { beds: any[], shadI
             <div 
               key={bed.id} 
               className="flex flex-col items-center cursor-pointer transform transition-transform hover:scale-105"
-              onClick={() => setSelectedBed(bed)}
+              onClick={() => handleBedClick(bed)}
             >
               <div 
                 className={`w-16 h-16 rounded flex items-center justify-center text-white font-bold shadow-sm ${statusColor}`}
@@ -295,7 +356,81 @@ export default function ShadBedList({ beds, shadId, shad }: { beds: any[], shadI
                 </form>
               </div>
             )}
+          
+        {/* Auto Family Modal */}
+        {autoFamilyModal && (
+          <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+            <div className="bg-white rounded-lg shadow-xl w-full max-w-md p-6 relative">
+              <button onClick={() => setAutoFamilyModal(false)} className="absolute top-4 right-4 text-slate-400">✕</button>
+              <h3 className="text-xl font-bold mb-4 text-purple-900">Auto-Assign Family Booking</h3>
+              <div className="space-y-4">
+                <div>
+                  <label className="block text-sm font-medium mb-1">Family/Main Name *</label>
+                  <input type="text" value={familyData.name} onChange={e => setFamilyData({...familyData, name: e.target.value})} className="w-full border px-3 py-2 rounded focus:ring" />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium mb-1">Number of Beds Needed *</label>
+                  <input type="number" min="1" value={familyData.autoCount} onChange={e => setFamilyData({...familyData, autoCount: e.target.value})} className="w-full border px-3 py-2 rounded focus:ring" />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium mb-1">Gender (Optional)</label>
+                  <select value={familyData.gender} onChange={e => setFamilyData({...familyData, gender: e.target.value})} className="w-full border px-3 py-2 rounded focus:ring bg-white">
+                    <option value="">Mixed / Unspecified</option>
+                    <option value="MALE">Male</option>
+                    <option value="FEMALE">Female</option>
+                  </select>
+                </div>
+                <div>
+                  <label className="block text-sm font-medium mb-1">Phone (Optional)</label>
+                  <input type="text" value={familyData.phone} onChange={e => setFamilyData({...familyData, phone: e.target.value})} className="w-full border px-3 py-2 rounded focus:ring" />
+                </div>
+                <button 
+                  onClick={() => submitFamilyBooking('AUTO')}
+                  disabled={registering || !familyData.name || !familyData.autoCount}
+                  className="w-full bg-purple-600 text-white py-2 rounded font-bold hover:bg-purple-700 disabled:opacity-50 mt-2"
+                >
+                  {registering ? 'Processing...' : 'Auto-Assign Now'}
+                </button>
+              </div>
+            </div>
           </div>
+        )}
+
+        {/* Manual Family Modal */}
+        {manualFamilyModal && (
+          <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+            <div className="bg-white rounded-lg shadow-xl w-full max-w-md p-6 relative">
+              <button onClick={() => setManualFamilyModal(false)} className="absolute top-4 right-4 text-slate-400">✕</button>
+              <h3 className="text-xl font-bold mb-4 text-indigo-900">Book {familyCart.length} Selected Beds</h3>
+              <div className="space-y-4">
+                <div>
+                  <label className="block text-sm font-medium mb-1">Family/Main Name *</label>
+                  <input type="text" value={familyData.name} onChange={e => setFamilyData({...familyData, name: e.target.value})} className="w-full border px-3 py-2 rounded focus:ring" />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium mb-1">Gender (Optional)</label>
+                  <select value={familyData.gender} onChange={e => setFamilyData({...familyData, gender: e.target.value})} className="w-full border px-3 py-2 rounded focus:ring bg-white">
+                    <option value="">Mixed / Unspecified</option>
+                    <option value="MALE">Male</option>
+                    <option value="FEMALE">Female</option>
+                  </select>
+                </div>
+                <div>
+                  <label className="block text-sm font-medium mb-1">Phone (Optional)</label>
+                  <input type="text" value={familyData.phone} onChange={e => setFamilyData({...familyData, phone: e.target.value})} className="w-full border px-3 py-2 rounded focus:ring" />
+                </div>
+                <button 
+                  onClick={() => submitFamilyBooking('MANUAL')}
+                  disabled={registering || !familyData.name}
+                  className="w-full bg-indigo-600 text-white py-2 rounded font-bold hover:bg-indigo-700 disabled:opacity-50 mt-2"
+                >
+                  {registering ? 'Processing...' : 'Book Selected Beds Now'}
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+  </div>
         </div>
       )}
     </div>
