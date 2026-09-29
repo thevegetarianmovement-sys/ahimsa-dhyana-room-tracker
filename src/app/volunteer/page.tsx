@@ -12,7 +12,7 @@ export default async function VolunteerDashboard() {
     redirect('/volunteer/login')
   }
 
-  const sessionRes = await fetch(`/api/auth/me`, {
+  const sessionRes = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:4000'}/api/auth/me`, {
     headers: { Cookie: `session=${sessionCookie}` },
     cache: 'no-store'
   })
@@ -29,7 +29,7 @@ export default async function VolunteerDashboard() {
   let content = null
 
   if (session.locationType === 'HOTEL') {
-    const res = await fetch(`/api/hotels/${session.locationId}`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:4000'}/api/hotels/${session.locationId}`, {
       headers: { Cookie: `session=${sessionCookie}` },
       cache: 'no-store'
     })
@@ -47,7 +47,7 @@ export default async function VolunteerDashboard() {
     content = <RoomList rooms={hotel.rooms} hotelId={hotel.id} hotel={hotel} />
 
   } else if (session.locationType === 'SHAD') {
-    const res = await fetch(`/api/shads/${session.locationId}`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:4000'}/api/shads/${session.locationId}`, {
       headers: { Cookie: `session=${sessionCookie}` },
       cache: 'no-store'
     })

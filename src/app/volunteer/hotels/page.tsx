@@ -6,7 +6,7 @@ export default async function VolunteerHotelsList({ searchParams }: { searchPara
   const sessionCookie = cookies().get('session')?.value || '';
   const q = searchParams.q?.trim() || ''
 
-  const hRes = await fetch(`/api/hotels`, { headers: { Cookie: `session=${sessionCookie}` }, cache: 'no-store' }); const hotels = hRes.ok ? await hRes.json() : [];
+  const hRes = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:4000'}/api/hotels`, { headers: { Cookie: `session=${sessionCookie}` }, cache: 'no-store' }); const hotels = hRes.ok ? await hRes.json() : [];
 
   return (
     <div className="min-h-screen bg-slate-100 p-4">

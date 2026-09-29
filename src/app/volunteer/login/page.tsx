@@ -2,7 +2,7 @@
 import VolunteerLoginForm from './VolunteerLoginForm'
 
 export default async function VolunteerLoginPage() {
-  const res = await fetch(`/api/public/locations`, { cache: 'no-store' });
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:4000'}/api/public/locations`, { cache: 'no-store' });
   const data = res.ok ? await res.json() : { hotels: [], shads: [] };
   const hotels = data.hotels;
   const shads = data.shads;

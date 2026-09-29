@@ -6,7 +6,7 @@ import ShareHotelButton from '@/components/ShareHotelButton'
 export default async function VolunteerHotelDetails({ params }: { params: { id: string } }) {
   const { cookies } = await import('next/headers');
   const sessionCookie = cookies().get('session')?.value || '';
-  const hRes = await fetch(`/api/hotels/${params.id}`, { headers: { Cookie: `session=${sessionCookie}` }, cache: 'no-store' }); const hotel = hRes.ok ? await hRes.json() : null;
+  const hRes = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:4000'}/api/hotels/${params.id}`, { headers: { Cookie: `session=${sessionCookie}` }, cache: 'no-store' }); const hotel = hRes.ok ? await hRes.json() : null;
 
   if (!hotel) notFound()
 
@@ -21,7 +21,7 @@ export default async function VolunteerHotelDetails({ params }: { params: { id: 
   const today = new Date()
   today.setHours(0,0,0,0)
 
-  const onDutyRes = await fetch(`/api/volunteers/on-duty?locationId=${hotel.id}&type=HOTEL`, { headers: { Cookie: `session=${sessionCookie}` }, cache: 'no-store' });
+  const onDutyRes = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:4000'}/api/volunteers/on-duty?locationId=${hotel.id}&type=HOTEL`, { headers: { Cookie: `session=${sessionCookie}` }, cache: 'no-store' });
   let onDuty = onDutyRes.ok ? await onDutyRes.json() : [];
   onDuty = onDuty.filter((s: any) => s.shiftName === currentShiftName);
 

@@ -10,9 +10,9 @@ export default async function VolunteerDetailsPage({ params }: { params: { id: s
   const sessionCookie = cookies().get('session')?.value || ''
   
   const [vRes, hRes, sRes] = await Promise.all([
-    fetch(`/api/volunteers/${params.id}`, { headers: { Cookie: `session=${sessionCookie}` }, cache: 'no-store' }),
-    fetch(`/api/hotels`, { headers: { Cookie: `session=${sessionCookie}` }, cache: 'no-store' }),
-    fetch(`/api/shads`, { headers: { Cookie: `session=${sessionCookie}` }, cache: 'no-store' })
+    fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:4000'}/api/volunteers/${params.id}`, { headers: { Cookie: `session=${sessionCookie}` }, cache: 'no-store' }),
+    fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:4000'}/api/hotels`, { headers: { Cookie: `session=${sessionCookie}` }, cache: 'no-store' }),
+    fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:4000'}/api/shads`, { headers: { Cookie: `session=${sessionCookie}` }, cache: 'no-store' })
   ])
 
   if (!vRes.ok) notFound()

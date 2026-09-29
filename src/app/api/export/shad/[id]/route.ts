@@ -5,7 +5,7 @@ import { requireAuth } from '@/lib/auth'
 export async function GET(request: Request, { params }: { params: { id: string } }) {
   try {
     const sessionCookie = request.headers.get('cookie') || ''
-    const res = await fetch(`/api/shads/${params.id}`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:4000'}/api/shads/${params.id}`, {
       headers: { Cookie: sessionCookie },
       cache: 'no-store'
     })

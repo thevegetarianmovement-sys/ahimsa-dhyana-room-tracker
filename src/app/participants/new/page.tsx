@@ -4,7 +4,7 @@ import ParticipantForm from '@/components/participants/ParticipantForm'
 
 export default async function NewParticipantPage() {
   const sessionCookie = cookies().get('session')?.value || ''
-  const res = await fetch(`/api/participants/categories`, {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:4000'}/api/participants/categories`, {
     headers: { Cookie: `session=${sessionCookie}` },
     cache: 'no-store'
   })

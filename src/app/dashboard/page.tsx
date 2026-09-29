@@ -5,8 +5,8 @@ export default async function DashboardPage() {
   const sessionCookie = require('next/headers').cookies().get('session')?.value || ''
   
   const [hotelsRes, shadsRes] = await Promise.all([
-    fetch(`/api/hotels`, { headers: { Cookie: `session=${sessionCookie}` }, cache: 'no-store' }),
-    fetch(`/api/shads`, { headers: { Cookie: `session=${sessionCookie}` }, cache: 'no-store' })
+    fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:4000'}/api/hotels`, { headers: { Cookie: `session=${sessionCookie}` }, cache: 'no-store' }),
+    fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:4000'}/api/shads`, { headers: { Cookie: `session=${sessionCookie}` }, cache: 'no-store' })
   ])
 
   const hotels = await hotelsRes.json()
