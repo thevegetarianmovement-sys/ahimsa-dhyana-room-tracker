@@ -5,7 +5,7 @@ import { notFound } from 'next/navigation'
 export default async function VolunteerShadDetails({ params }: { params: { id: string } }) {
   const { cookies } = await import('next/headers');
   const sessionCookie = cookies().get('session')?.value || '';
-  const sRes = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:4000'}/api/shads/${params.id}`, { headers: { Cookie: `session=${sessionCookie}` }, cache: 'no-store' }); const shad = sRes.ok ? await sRes.json() : null;
+  const sRes = await fetch(`/api/shads/${params.id}`, { headers: { Cookie: `session=${sessionCookie}` }, cache: 'no-store' }); const shad = sRes.ok ? await sRes.json() : null;
 
   if (!shad) notFound()
 
@@ -19,7 +19,7 @@ export default async function VolunteerShadDetails({ params }: { params: { id: s
   const today = new Date()
   today.setHours(0,0,0,0)
 
-  const onDutyRes = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:4000'}/api/volunteers/on-duty?locationId=${shad.id}&type=SHAD`, { headers: { Cookie: `session=${sessionCookie}` }, cache: 'no-store' });
+  const onDutyRes = await fetch(`/api/volunteers/on-duty?locationId=${shad.id}&type=SHAD`, { headers: { Cookie: `session=${sessionCookie}` }, cache: 'no-store' });
   let onDuty = onDutyRes.ok ? await onDutyRes.json() : [];
   onDuty = onDuty.filter((s: any) => s.shiftName === currentShiftName);
 

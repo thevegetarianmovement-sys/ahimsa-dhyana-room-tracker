@@ -30,14 +30,14 @@ export default function ParticipantForm({
 
     try {
       if (isEditing) {
-        await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:4000'}/api/participants/${initialData.id}`, {
+        await fetch(`/api/participants/${initialData.id}`, {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
           credentials: 'include',
           body: JSON.stringify(data)
         })
       } else {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:4000'}/api/participants`, {
+        const res = await fetch(`/api/participants`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           credentials: 'include',

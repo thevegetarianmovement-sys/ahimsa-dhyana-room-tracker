@@ -13,7 +13,7 @@ export default function ShadEditForm({ shad }: { shad: { id: string, name: strin
     const formData = new FormData(e.currentTarget)
     
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:4000'}/api/shads/${shad.id}`, {
+      const res = await fetch(`/api/shads/${shad.id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include',

@@ -12,7 +12,7 @@ export default function CancelAllocationButton({ allocationId, participantId }: 
     if (!confirm('Are you sure you want to cancel this accommodation assignment?')) return
     setLoading(true)
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:4000'}/api/allocations/${allocationId}/cancel`, {
+      const res = await fetch(`/api/allocations/${allocationId}/cancel`, {
         method: 'PUT',
         credentials: 'include'
       })

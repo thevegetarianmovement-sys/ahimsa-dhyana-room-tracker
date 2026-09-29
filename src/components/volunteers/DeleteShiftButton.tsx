@@ -12,7 +12,7 @@ export default function DeleteShiftButton({ shiftId }: { shiftId: string }) {
     if (!confirm('Remove this shift?')) return
     setLoading(true)
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:4000'}/api/volunteers/shifts/${shiftId}`, {
+      const res = await fetch(`/api/volunteers/shifts/${shiftId}`, {
         method: 'DELETE',
         credentials: 'include'
       })

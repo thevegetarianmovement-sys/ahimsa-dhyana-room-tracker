@@ -15,7 +15,7 @@ export default function DeleteParticipantButton({ participantId }: { participant
     
     setLoading(true)
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:4000'}/api/participants/${participantId}`, {
+      const res = await fetch(`/api/participants/${participantId}`, {
         method: 'DELETE',
         credentials: 'include'
       })

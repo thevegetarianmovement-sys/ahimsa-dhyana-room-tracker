@@ -10,7 +10,7 @@ export default async function ParticipantsPage({ searchParams }: { searchParams:
   const locationFilter = searchParams.location || ''
   const sessionCookie = cookies().get('session')?.value || ''
 
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:4000'}/api/participants?q=${encodeURIComponent(q)}&status=${encodeURIComponent(status)}`, {
+  const res = await fetch(`/api/participants?q=${encodeURIComponent(q)}&status=${encodeURIComponent(status)}`, {
     headers: { Cookie: `session=${sessionCookie}` },
     cache: 'no-store'
   })
@@ -36,8 +36,8 @@ export default async function ParticipantsPage({ searchParams }: { searchParams:
     )
   }
 
-  const hRes = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:4000'}/api/hotels`, { headers: { Cookie: `session=${sessionCookie}` }, cache: 'no-store' }); const hotels = hRes.ok ? await hRes.json() : [];
-  const sRes = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:4000'}/api/shads`, { headers: { Cookie: `session=${sessionCookie}` }, cache: 'no-store' }); const shads = sRes.ok ? await sRes.json() : [];
+  const hRes = await fetch(`/api/hotels`, { headers: { Cookie: `session=${sessionCookie}` }, cache: 'no-store' }); const hotels = hRes.ok ? await hRes.json() : [];
+  const sRes = await fetch(`/api/shads`, { headers: { Cookie: `session=${sessionCookie}` }, cache: 'no-store' }); const shads = sRes.ok ? await sRes.json() : [];
 
   return (
     <div className="p-8 max-w-7xl mx-auto">

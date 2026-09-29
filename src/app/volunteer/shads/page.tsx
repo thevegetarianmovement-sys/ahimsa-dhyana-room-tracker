@@ -4,7 +4,7 @@ import Link from 'next/link'
 export default async function VolunteerShadsList() {
   const { cookies } = await import('next/headers');
   const sessionCookie = cookies().get('session')?.value || '';
-  const sRes = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:4000'}/api/shads`, { headers: { Cookie: `session=${sessionCookie}` }, cache: 'no-store' }); const shads = sRes.ok ? await sRes.json() : [];
+  const sRes = await fetch(`/api/shads`, { headers: { Cookie: `session=${sessionCookie}` }, cache: 'no-store' }); const shads = sRes.ok ? await sRes.json() : [];
 
   return (
     <div className="min-h-screen bg-slate-100 p-4">

@@ -12,7 +12,7 @@ export async function GET(request: Request) {
     const locationFilter = searchParams.get('location') || ''
 
     const sessionCookie = request.headers.get('cookie') || ''
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:4000'}/api/participants?q=${encodeURIComponent(q)}&status=${encodeURIComponent(status)}`, {
+    const res = await fetch(`/api/participants?q=${encodeURIComponent(q)}&status=${encodeURIComponent(status)}`, {
       headers: { Cookie: sessionCookie }
     })
     

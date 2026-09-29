@@ -8,7 +8,7 @@ import PrintButton from '@/components/PrintButton'
 
 export default async function ShadDetailsPage({ params }: { params: { id: string } }) {
   const sessionCookie = require('next/headers').cookies().get('session')?.value || ''
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:4000'}/api/shads/${params.id}`, {
+  const res = await fetch(`/api/shads/${params.id}`, {
     headers: { Cookie: `session=${sessionCookie}` },
     cache: 'no-store'
   })

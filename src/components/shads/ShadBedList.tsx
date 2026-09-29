@@ -49,7 +49,7 @@ export default function ShadBedList({ beds, shadId, shad }: { beds: any[], shadI
         }
       };
 
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:4000'}/api/allocations/family-book`, {
+      const res = await fetch(`/api/allocations/family-book`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include',
@@ -78,7 +78,7 @@ export default function ShadBedList({ beds, shadId, shad }: { beds: any[], shadI
     if (!confirm("Are you sure you want to check out this participant?")) return
     setCheckingOut(true)
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:4000'}/api/allocations/${allocId}/checkout`, {
+      const res = await fetch(`/api/allocations/${allocId}/checkout`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include',
@@ -98,7 +98,7 @@ export default function ShadBedList({ beds, shadId, shad }: { beds: any[], shadI
     e.preventDefault()
     setRegistering(true)
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:4000'}/api/allocations/register`, {
+      const res = await fetch(`/api/allocations/register`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include',

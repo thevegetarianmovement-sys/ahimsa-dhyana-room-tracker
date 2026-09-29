@@ -15,7 +15,7 @@ export default function RoomForm({ hotelId }: { hotelId: string }) {
     const formData = new FormData(form)
     
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:4000'}/api/hotels/${hotelId}/rooms`, {
+      const res = await fetch(`/api/hotels/${hotelId}/rooms`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include',

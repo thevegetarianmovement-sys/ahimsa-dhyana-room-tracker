@@ -22,7 +22,7 @@ export default function VolunteerForm({ initialData = {} }: { initialData?: any 
 
     try {
       if (isEditing) {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:4000'}/api/volunteers/${initialData.id}`, {
+        const res = await fetch(`/api/volunteers/${initialData.id}`, {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
           credentials: 'include',
@@ -32,7 +32,7 @@ export default function VolunteerForm({ initialData = {} }: { initialData?: any 
         router.refresh()
         alert('Saved successfully')
       } else {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:4000'}/api/volunteers`, {
+        const res = await fetch(`/api/volunteers`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           credentials: 'include',

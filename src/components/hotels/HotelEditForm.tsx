@@ -13,7 +13,7 @@ export default function HotelEditForm({ hotel }: { hotel: { id: string, name: st
     const formData = new FormData(e.currentTarget)
     
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:4000'}/api/hotels/${hotel.id}`, {
+      const res = await fetch(`/api/hotels/${hotel.id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include',

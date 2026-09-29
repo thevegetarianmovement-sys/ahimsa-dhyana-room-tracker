@@ -13,7 +13,7 @@ export default function DeleteRoomButton({ roomId, hotelId, disabled }: { roomId
     
     setLoading(true)
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:4000'}/api/hotels/rooms/${roomId}`, {
+      const res = await fetch(`/api/hotels/rooms/${roomId}`, {
         method: 'DELETE',
         credentials: 'include'
       })

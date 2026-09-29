@@ -4,7 +4,7 @@ import Link from 'next/link'
 
 export default async function VolunteersPage() {
   const sessionCookie = require('next/headers').cookies().get('session')?.value || ''
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:4000'}/api/volunteers`, { headers: { Cookie: 'session=' + sessionCookie }, cache: 'no-store' })
+  const res = await fetch(`/api/volunteers`, { headers: { Cookie: 'session=' + sessionCookie }, cache: 'no-store' })
   if (!res.ok) throw new Error('Error')
   const volunteers = await res.json()
 

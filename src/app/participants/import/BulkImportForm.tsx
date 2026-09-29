@@ -49,7 +49,7 @@ export default function BulkImportForm() {
 
           if (dataToUpload.length === 0) throw new Error('No valid rows found to import')
 
-          const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:4000'}/api/participants/bulk`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, credentials: 'include', body: JSON.stringify({ participants: dataToUpload }) }); if(!response.ok) throw new Error('Failed to bulk import'); const res = await response.json();
+          const response = await fetch(`/api/participants/bulk`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, credentials: 'include', body: JSON.stringify({ participants: dataToUpload }) }); if(!response.ok) throw new Error('Failed to bulk import'); const res = await response.json();
           setResult({ success: res.successCount, skip: res.skipCount })
           
           if (e.target) {
