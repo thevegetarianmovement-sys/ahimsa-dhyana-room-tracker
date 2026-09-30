@@ -84,7 +84,7 @@ hotels.sort((a: any, b: any) => {
                     {isReady(hotel.name) && <span className="ml-2 text-xs bg-green-100 text-green-800 px-2 py-1 rounded-full align-middle border border-green-200 shadow-sm">⭐ Ready</span>}
                   </h3>
                 <p className="text-sm text-slate-500 mb-2">{hotel.location}</p>
-                  <div className="flex flex-wrap gap-1 mb-4">
+                  <div className="flex flex-wrap gap-2 mb-4">
                     {Object.entries(capacityCounts)
                       .sort(([capA], [capB]) => Number(capA) - Number(capB))
                       .map(([cap, count]) => (

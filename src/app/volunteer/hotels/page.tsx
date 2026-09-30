@@ -36,7 +36,7 @@ export default async function VolunteerHotelsList({ searchParams }: { searchPara
               <Link href={`/volunteer/hotels/${hotel.id}`} key={hotel.id} className="block bg-white p-4 rounded-xl shadow-sm border hover:border-blue-500">
                 <h2 className="text-xl font-bold">{hotel.name}</h2>
                 <p className="text-sm text-slate-500 mb-2">{hotel.location}</p>
-                <div className="flex flex-wrap gap-1 mt-2">
+                <div className="flex flex-wrap gap-2 mt-2">
                   {Object.entries(capacityCounts)
                     .sort(([capA], [capB]) => Number(capA) - Number(capB))
                     .map(([cap, count]) => (
