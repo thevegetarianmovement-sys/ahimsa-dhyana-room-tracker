@@ -2,6 +2,7 @@
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import ShareHotelButton from '@/components/ShareHotelButton'
+import RoomList from '@/components/hotels/RoomList'
 
 export default async function VolunteerHotelDetails({ params }: { params: { id: string } }) {
   const { cookies } = await import('next/headers');
@@ -88,35 +89,11 @@ export default async function VolunteerHotelDetails({ params }: { params: { id: 
           )}
         </div>
 
-        <h2 className="text-xl font-bold text-slate-800 ml-2">Rooms</h2>
-        <div className="space-y-4">
-          {hotel.rooms.map((room: any) => (
-            <div key={room.id} className="bg-white p-4 rounded-xl shadow-sm border">
-              <h3 className="font-bold text-lg mb-3">Room {room.number}</h3>
-              <div className="flex flex-wrap gap-2">
-                {room.beds.map((bed: any) => {
-                  let statusColor = 'bg-green-500'
-                  if (bed.allocations.length > 0) {
-                    const todayStr = new Date().toISOString().split('T')[0]
-                    const checkoutStr = bed.allocations[0].checkOutDate.toISOString().split('T')[0]
-                    if (todayStr === checkoutStr) statusColor = 'bg-orange-500'
-                    else statusColor = 'bg-red-500'
-                  }
-
-                  return (
-                    <div 
-                      key={bed.id} 
-                      className={`w-10 h-10 flex items-center justify-center text-white font-bold rounded ${statusColor}`}
-                    >
-                      {bed.number}
-                    </div>
-                  )
-                })}
-              </div>
-            </div>
-          ))}
-        </div>
+        
+      <div className="mt-8">
+        <RoomList rooms={hotel.rooms} hotelId={hotel.id} hotel={hotel} isVolunteer={true} />
       </div>
     </div>
+  </div>
   )
 }
