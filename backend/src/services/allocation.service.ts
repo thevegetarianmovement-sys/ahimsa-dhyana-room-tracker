@@ -361,3 +361,11 @@ export const familyBookAndAllocate = async (
 
   return allocations;
 }
+
+export const bulkUndoAllocations = async (allocationIds: string[]) => {
+  // Hard delete allocations
+  await prisma.accommodationAllocation.deleteMany({
+    where: { id: { in: allocationIds } }
+  });
+  return { success: true, count: allocationIds.length };
+};

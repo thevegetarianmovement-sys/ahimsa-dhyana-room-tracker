@@ -106,3 +106,21 @@ export const familyBookAndAllocate = async (req: AuthenticatedRequest, res: Resp
     res.status(400).json({ error: error.message || 'Failed to family register and allocate' });
   }
 }
+
+export const bulkUndoAllocations = async (req: AuthenticatedRequest, res: Response): Promise<void> => {
+  try {
+    const { allocationIds, locationId, type } = req.body;
+    if (req.user.role === 'VOLUNTEER') {
+      const isAuth = await isVolunteerAuthorizedForLocation(req.user.id, locationId, type);
+      if (!isAuth) {
+        res.status(403).json({ error: 'Forbidden: You can only manage your assigned location' });
+        return;
+      }
+    }
+    const result = await allocationService.bulkUndoAllocations(allocationIds);
+    res.status(200).json(result);
+  } catch (error: any) {
+    console.error('Bulk undo error:', error);
+    res.status(500).json({ error: 'Failed to bulk undo allocations' });
+  }
+};

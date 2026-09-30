@@ -21,4 +21,6 @@ router.post('/group-register', requireAuth(['ADMIN', 'VOLUNTEER']), allocationCo
 
 router.post('/family-book', requireAuth(['ADMIN', 'VOLUNTEER']), allocationController.familyBookAndAllocate)
 
+router.post('/bulk-undo', requireAuth(['ADMIN', 'VOLUNTEER']), allocationController.bulkUndoAllocations)
+
 export default router

@@ -16,6 +16,8 @@ export default function RoomList({ rooms, hotelId, hotel, isVolunteer = false }:
   
   const [groupBookingRoom, setGroupBookingRoom] = useState<any>(null)
     const [familyMode, setFamilyMode] = useState(false);
+  const [undoMode, setUndoMode] = useState(false);
+  const [undoCart, setUndoCart] = useState<string[]>([]);
   const [familyCart, setFamilyCart] = useState<string[]>([]);
   const [autoFamilyModal, setAutoFamilyModal] = useState(false);
   const [manualFamilyModal, setManualFamilyModal] = useState(false);
@@ -99,6 +101,31 @@ export default function RoomList({ rooms, hotelId, hotel, isVolunteer = false }:
       router.refresh();
     } catch (e: any) {
       alert(e.message);
+    }
+  };
+
+  const handleBulkUndo = async () => {
+    if (undoCart.length === 0) return;
+    if (!confirm(`Are you sure you want to completely erase ${undoCart.length} assignments? This cannot be undone.`)) return;
+    
+    try {
+      setRegistering(true);
+      await fetch('/api/allocations/bulk-undo', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          allocationIds: undoCart,
+          locationId: hotelId,
+          type: 'HOTEL'
+        })
+      });
+      setUndoCart([]);
+      setUndoMode(false);
+      window.location.reload();
+    } catch (e) {
+      console.error(e);
+      alert('Failed to undo assignments');
+      setRegistering(false);
     }
   };
 
@@ -226,7 +253,28 @@ export default function RoomList({ rooms, hotelId, hotel, isVolunteer = false }:
       <div className="flex flex-wrap gap-2 mb-6 p-4 bg-purple-50 rounded-lg border border-purple-200">
         <div className="w-full flex justify-between items-center mb-2">
           <h3 className="font-bold text-purple-900">Family Booking</h3>
-          {familyMode && (
+          {undoMode && (
+        <div className="fixed bottom-0 left-0 right-0 bg-red-600 text-white p-4 shadow-[0_-10px_40px_rgba(220,38,38,0.3)] z-40 flex justify-between items-center transform transition-transform duration-300">
+          <div className="max-w-7xl mx-auto flex w-full justify-between items-center">
+            <div>
+              <p className="font-bold text-lg">Undo Mode Active</p>
+              <p className="text-red-100 text-sm">{undoCart.length} assignments selected to erase</p>
+            </div>
+            <div className="flex gap-4 items-center">
+              <button onClick={() => { setUndoMode(false); setUndoCart([]); }} className="text-red-200 hover:text-white font-medium">Cancel</button>
+              <button 
+                onClick={handleBulkUndo}
+                disabled={undoCart.length === 0 || registering}
+                className="bg-white text-red-600 px-6 py-2 rounded-xl font-bold shadow-lg hover:bg-red-50 disabled:opacity-50 disabled:cursor-not-allowed transition-all transform hover:scale-105 active:scale-95"
+              >
+                {registering ? 'Erasing...' : `Erase ${undoCart.length} Beds`}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {familyMode && (
             <button onClick={() => { setFamilyMode(false); setFamilyCart([]); }} className="text-sm text-purple-700 underline">Cancel Manual Mode</button>
           )}
         </div>
