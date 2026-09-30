@@ -122,8 +122,7 @@ export const registerAndAllocate = async (
   // 2. Create Participant
   let regNum = data.registrationNumber
   if (!regNum || regNum.trim() === '') {
-    const count = await prisma.participant.count()
-    regNum = `ADM-${1000 + count + 1}`
+    regNum = `ADM-${Math.floor(Date.now() / 1000).toString().slice(-4)}${Math.floor(Math.random() * 1000).toString().padStart(3, '0')}`
   }
 
   const p = await prisma.participant.create({
@@ -202,8 +201,7 @@ export const groupRegisterAndAllocate = async (
 
     let regNum = data.registrationNumber
     if (!regNum || regNum.trim() === '') {
-      const count = await prisma.participant.count()
-      regNum = `ADM-${1000 + count + 1 + i}`
+      regNum = `ADM-${Math.floor(Date.now() / 1000).toString().slice(-4)}${Math.floor(Math.random() * 1000).toString().padStart(3, '0')}`
     }
 
     const p = await prisma.participant.create({
@@ -321,11 +319,10 @@ export const familyBookAndAllocate = async (
   let femaleRemaining = data.femaleCount || 0;
 // Create separate participants and allocations for each bed in the family
   const allocations = [];
-  const startCount = await prisma.participant.count();
-  
-  for (let i = 0; i < targetBedIds.length; i++) {
-    const bId = targetBedIds[i];
-    const regNum = `FAM-${1000 + startCount + 1 + i}`;
+  const baseId = Math.floor(Date.now() / 1000).toString().slice(-4);
+    for (let i = 0; i < targetBedIds.length; i++) {
+      const bId = targetBedIds[i];
+      const regNum = `FAM-${baseId}${Math.floor(Math.random() * 1000).toString().padStart(3, '0')}`;
     
     let pGender = null;
     if (maleRemaining > 0) {
