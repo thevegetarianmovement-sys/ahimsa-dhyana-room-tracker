@@ -3,7 +3,6 @@ import { cookies } from 'next/headers'
 import { redirect, notFound } from 'next/navigation'
 import RoomList from '@/components/hotels/RoomList'
 import ShadBedList from '@/components/shads/ShadBedList'
-import Link from 'next/link'
 import SwitchButton from '@/components/volunteers/SwitchButton'
 
 export default async function VolunteerDashboard() {
