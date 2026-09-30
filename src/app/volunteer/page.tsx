@@ -69,12 +69,7 @@ export default async function VolunteerDashboard() {
           <h1 className="font-bold text-lg leading-tight">{locationName}</h1>
           <p className="text-xs text-slate-300">Volunteer: {session.username}</p>
         </div>
-        <Link 
-          href="/volunteer/login" 
-          className="text-xs bg-slate-700 hover:bg-slate-600 px-3 py-2 rounded font-medium transition-colors"
-        >
-          Switch
-        </Link>
+        <SwitchButton />
       </header>
 
       <main className="flex-1 p-4 md:p-8 max-w-7xl mx-auto w-full">
