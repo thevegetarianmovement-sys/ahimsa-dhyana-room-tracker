@@ -345,7 +345,7 @@ export default function RoomList({ rooms, hotelId, hotel }: { rooms: any[], hote
         {autoFamilyModal && (
           <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center z-50 p-4 animate-in fade-in duration-200">
             <div className="bg-white rounded-2xl shadow-2xl border border-slate-100 w-full max-w-md p-6 sm:p-8 relative animate-in zoom-in-95 duration-200">
-              <button onClick={() => setAutoFamilyModal(false)} className="absolute top-4 right-4 text-slate-400 hover:text-slate-700 bg-slate-50 hover:bg-slate-100 w-8 h-8 flex items-center justify-center rounded-full transition-colors font-bold">X</button>
+              <button onClick={() => setAutoFamilyModal(false)} className="absolute top-4 right-4 text-slate-400 hover:text-slate-700 bg-slate-50 hover:bg-slate-200 w-8 h-8 flex items-center justify-center rounded-full transition-colors font-bold shadow-sm">X</button>
               <h3 className="text-2xl font-extrabold tracking-tight mb-4 text-purple-900">Auto-Assign Family Booking</h3>
               <div className="space-y-4">
                 <div>
@@ -392,7 +392,7 @@ export default function RoomList({ rooms, hotelId, hotel }: { rooms: any[], hote
         {manualFamilyModal && (
           <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center z-50 p-4 animate-in fade-in duration-200">
             <div className="bg-white rounded-2xl shadow-2xl border border-slate-100 w-full max-w-md p-6 sm:p-8 relative animate-in zoom-in-95 duration-200">
-              <button onClick={() => setManualFamilyModal(false)} className="absolute top-4 right-4 text-slate-400 hover:text-slate-700 bg-slate-50 hover:bg-slate-100 w-8 h-8 flex items-center justify-center rounded-full transition-colors font-bold">X</button>
+              <button onClick={() => setManualFamilyModal(false)} className="absolute top-4 right-4 text-slate-400 hover:text-slate-700 bg-slate-50 hover:bg-slate-200 w-8 h-8 flex items-center justify-center rounded-full transition-colors font-bold shadow-sm">X</button>
               <h3 className="text-2xl font-extrabold tracking-tight mb-4 text-indigo-900">Book {familyCart.length} Selected Beds</h3>
               <div className="space-y-4">
                 <div>
@@ -440,12 +440,7 @@ export default function RoomList({ rooms, hotelId, hotel }: { rooms: any[], hote
       {selectedBed && (
         <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center z-50 p-4 animate-in fade-in duration-200">
           <div className="bg-white rounded-2xl shadow-2xl border border-slate-100 w-full max-w-md p-6 sm:p-8 relative animate-in zoom-in-95 duration-200">
-            <button 
-              onClick={() => setSelectedBed(null)}
-              className="absolute top-4 right-4 text-slate-400 hover:text-slate-600"
-            >
-              ✕
-            </button>
+            <button onClick={() => setSelectedBed(null)} className="absolute top-4 right-4 text-slate-400 hover:text-slate-700 bg-slate-50 hover:bg-slate-200 w-8 h-8 flex items-center justify-center rounded-full transition-colors font-bold shadow-sm">X</button>
             <h3 className="text-2xl font-bold mb-1">Room {selectedBed.roomNumber} - {selectedBed.number}</h3>
             
             {selectedBed.allocations?.length > 0 ? (
@@ -564,6 +559,7 @@ export default function RoomList({ rooms, hotelId, hotel }: { rooms: any[], hote
                     />
                   </div>
                   <div className="pt-2 flex gap-3">
+                      <button type="button" onClick={() => setSelectedBed(null)} className="flex-1 bg-slate-100 text-slate-700 py-2.5 rounded-xl font-bold hover:bg-slate-200 text-center transition-all">Cancel</button>
                     <button 
                       type="submit" 
                       disabled={registering}
@@ -589,12 +585,7 @@ export default function RoomList({ rooms, hotelId, hotel }: { rooms: any[], hote
       {groupBookingRoom && (
         <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center z-50 p-4 animate-in fade-in duration-200">
           <div className="bg-white rounded-2xl shadow-2xl border border-slate-100 w-full max-w-2xl p-6 sm:p-8 relative max-h-[90vh] overflow-y-auto animate-in zoom-in-95 duration-200">
-            <button 
-              onClick={() => { setGroupBookingRoom(null); setGroupData([]); }}
-              className="absolute top-4 right-4 text-slate-400 hover:text-slate-600 font-bold"
-            >
-              ✕
-            </button>
+            <button onClick={() => { setGroupBookingRoom(null); setGroupData([]); }} className="absolute top-4 right-4 text-slate-400 hover:text-slate-700 bg-slate-50 hover:bg-slate-200 w-8 h-8 flex items-center justify-center rounded-full transition-colors font-bold shadow-sm">X</button>
             <h3 className="text-2xl font-bold mb-1">Group Booking: Room {groupBookingRoom.number}</h3>
             <p className="text-slate-500 mb-6">Assign multiple people to the {groupData.length} available beds.</p>
             
@@ -699,7 +690,7 @@ export default function RoomList({ rooms, hotelId, hotel }: { rooms: any[], hote
                 <button 
                   type="button" 
                   onClick={() => { setGroupBookingRoom(null); setGroupData([]); }}
-                  className="px-4 py-2 text-slate-600 hover:text-slate-800 font-medium"
+                  className="px-6 py-2.5 bg-slate-100 text-slate-700 hover:bg-slate-200 rounded-xl font-bold transition-all"
                 >
                   Cancel
                 </button>
