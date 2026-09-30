@@ -282,7 +282,17 @@ export default function RoomList({ rooms, hotelId, hotel, isVolunteer = false }:
         {!familyMode ? (
           <>
             <button 
-              onClick={() => setAutoFamilyModal(true)}
+                onClick={() => {
+                  setUndoMode(!undoMode);
+                  if (!undoMode) { setFamilyMode(false); setFamilyCart([]); }
+                  setUndoCart([]);
+                }}
+                className={`flex-1 px-4 py-2 rounded shadow text-sm font-bold ${undoMode ? 'bg-red-600 text-white hover:bg-red-700' : 'bg-red-50 text-red-700 border border-red-200 hover:bg-red-100'}`}
+              >
+                {undoMode ? 'Cancel Undo Mode' : 'Mistake? Bulk Undo'}
+              </button>
+              <button 
+                onClick={() => setAutoFamilyModal(true)}
               className="flex-1 bg-purple-600 text-white px-4 py-2 rounded shadow hover:bg-purple-700 text-sm font-bold"
             >
               Auto-Assign Family
